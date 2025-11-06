@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
 
-import { io, Socket } from 'socket.io-client'
+import { api } from '../../../utils/api'
 
 import { Section, Form, FloatingH1, FormField, FieldTitle, FieldInput, FormButton, FormBreak } from './styles'
 
 export function Home() {
-  const [socket, setSocket] = useState<Socket>()
-
   const [enterRoomPayload, setEnterRoomPayload] = useState({
     code: '',
-    username: '',
+    name: '',
   })
   
   const [formStep, setFormStep] = useState<'room' | 'user'>('room')
@@ -27,8 +25,32 @@ export function Home() {
     setFormStep('user')
   }
 
-  function handleFinish() {
-    
+  async function handleCreateRoom() {
+    try {
+      const payload = {
+        users: [
+          {
+            name: enterRoomPayload.name,
+            owner: true,
+          },
+        ],
+      }
+
+      const response = await api.post('/rooms', payload)
+      const data = response.data
+
+      console.log('data', data)
+    } catch (err) {
+      console.error('err', err)
+    }
+  }
+
+  async function handleFinish(event: React.SyntheticEvent) {
+    event.preventDefault()
+
+    if (!enterRoomPayload.code) {
+      await handleCreateRoom()
+    }
   }
   
   return (
@@ -72,7 +94,7 @@ export function Home() {
             </Form>
           )
           : (
-            <Form>
+            <Form onSubmit={handleFinish}>
               <h2>
                 Escolha seu nome
               </h2>
@@ -83,7 +105,7 @@ export function Home() {
                 </FieldTitle>
 
                 <FieldInput
-                  name='username'
+                  name='name'
                   type='text'
                   placeholder='Potato Chips'
                   onChange={handleInputChange}

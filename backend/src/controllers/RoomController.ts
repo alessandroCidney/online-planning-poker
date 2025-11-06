@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { type WebSocket } from 'ws'
 
 import { Room } from '../models/Room'
 
@@ -20,11 +19,5 @@ export class RoomController {
         message: err instanceof Error ? err.message : 'Internal server error',
       })
     }
-  }
-
-  static async connectToRoom(ws: WebSocket, req: Request) {
-    console.log(req.params)
-
-    ws.close()
   }
 }
