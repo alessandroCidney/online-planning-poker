@@ -1,12 +1,21 @@
 import { Request, Response } from 'express'
 
-import { Room } from '../models/Room'
+import { Room, roomSchema } from '../models/Room'
+import { InferSchemaType } from 'mongoose'
 
 export class RoomController {
-  static async createRoom(req: Request<{}, {}, InstanceType<typeof Room>>, res: Response) {  
+  static async createRoom(req: Request<{}, {}, InferSchemaType<typeof roomSchema>>, res: Response) {  
     try {
       const { users } = req.body
-    
+
+      if (users.length !== 1) {
+        throw new Error('Invalid users length')
+      }
+
+      if (!users[0].owner) {
+        throw new Error('First user should be an owner')
+      }
+
       const room = new Room({
         users,
       })
