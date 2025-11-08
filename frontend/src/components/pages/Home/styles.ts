@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Section = styled.section`
+export const StyledMain = styled.section`
   height: 100vh;
   width: 100vw;
 

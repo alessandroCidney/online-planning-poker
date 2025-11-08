@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { api } from '../../../utils/api'
 
-import { Section, Form, FloatingH1, FormField, FieldTitle, FieldInput, FormButton, FormBreak } from './styles'
+import { StyledMain, Form, FloatingH1, FormField, FieldTitle, FieldInput, FormButton, FormBreak } from './styles'
 
 export function Home() {
   const [enterRoomPayload, setEnterRoomPayload] = useState({
@@ -54,7 +54,7 @@ export function Home() {
   }
   
   return (
-    <Section>
+    <StyledMain>
       <FloatingH1>
         Home
       </FloatingH1>
@@ -118,6 +118,6 @@ export function Home() {
             </Form>
           )
       }
-    </Section>
+    </StyledMain>
   )
 }
