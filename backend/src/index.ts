@@ -4,9 +4,7 @@ import { Server } from 'socket.io'
 import cors from 'cors'
 import 'dotenv/config'
 
-import { startMongoose } from './db/conn'
-
-import { roomRoutes, setupRoomEvents } from './routes/roomRoutes'
+import { setupRoomEvents } from './handlers/roomHandler'
 
 const app = express()
 
@@ -28,18 +26,16 @@ app.get('/', (req, res) => {
   })
 })
 
-app.use('/rooms', roomRoutes)
-
-io.on('connection', (socket) => {
-  setupRoomEvents(socket)
+app.get('/rooms', (req, res) => {
+  res.status(200).json({
+    rooms: io.sockets.adapter.rooms.entries(),
+  })
 })
 
-startMongoose()
-  .then(() => {
-    httpServer.listen(process.env.PORT, () => {
-      console.log(`Listening at port ${process.env.PORT}`)
-    })
-  })
-  .catch((err) => {
-    console.error('Error establishing a connection to the database.', err)
-  })
+io.on('connection', (socket) => {
+  setupRoomEvents(io, socket)
+})
+
+httpServer.listen(process.env.PORT, () => {
+  console.log(`Listening at port ${process.env.PORT}`)
+})

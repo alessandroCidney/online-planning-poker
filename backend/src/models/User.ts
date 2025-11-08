@@ -1,30 +1,11 @@
-import { mongoose } from '../db/conn'
+import { v4 as uuidV4 } from 'uuid'
 
-const { Schema } = mongoose
+export class User {
+  _id: string
+  name: string
 
-export const userSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-
-    owner: {
-      type: Boolean,
-      required: true,
-    },
-
-    online: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-  },
-)
-
-export const User = mongoose.model(
-  'User',
-  userSchema,
-)
+  constructor(name = 'Sem Nome', _id = uuidV4()) {
+    this.name = name
+    this._id = _id
+  }
+}

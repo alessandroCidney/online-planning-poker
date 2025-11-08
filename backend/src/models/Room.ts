@@ -1,25 +1,21 @@
-import { mongoose } from '../db/conn'
-import { storySchema } from './Story'
-import { userSchema } from './User'
+import { v4 as uuidV4 } from 'uuid'
 
-const { Schema } = mongoose
+import { Story } from './Story'
+import { User } from './User'
 
-export const roomSchema = new Schema(
-  {
-    ownerId: {
-      type: String,
-      required: true,
-    },
+export class Room {
+  _id: string
 
-    users: [userSchema],
-    stories: [storySchema],
-  },
-  {
-    timestamps: true,
-  },
-)
+  users: User[]
+  stories: Story[]
 
-export const Room = mongoose.model(
-  'Room',
-  roomSchema,
-)
+  ownerIds: string[]
+
+  constructor(users = [] as User[], stories = [] as Story[], _id = uuidV4()) {
+    this._id = _id
+    this.users = users
+    this.stories = stories
+
+    this.ownerIds = users.map(userData => userData._id)
+  }
+}

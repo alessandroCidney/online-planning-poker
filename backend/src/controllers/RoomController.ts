@@ -1,32 +1,49 @@
-import { Request, Response } from 'express'
+import { Socket, Server } from 'socket.io'
 
-import { Room, roomSchema } from '../models/Room'
-import { InferSchemaType } from 'mongoose'
+import { Room } from '../models/Room'
+import { User } from '../models/User'
+
+const onlineRooms: Record<string, Room> = {}
 
 export class RoomController {
-  static async createRoom(req: Request<{}, {}, InferSchemaType<typeof roomSchema>>, res: Response) {  
-    try {
-      const { users } = req.body
+  io: Server
+  socket: Socket
 
-      if (users.length !== 1) {
-        throw new Error('Invalid users length')
-      }
+  constructor(io: Server, socket: Socket) {
+    this.io = io
+    this.socket = socket
+  }
 
-      if (!users[0]) {
-        throw new Error('First user should be an owner')
-      }
+  async createRoom(socket: Socket) {
+    const room = new Room()
 
-      const room = new Room({
-        users,
-      })
+    room.ownerIds.push(socket.id)
 
-      const savedRoom = await room.save()
+    onlineRooms[room._id] = room
+  }
 
-      res.status(201).json(savedRoom)
-    } catch (err) {
-      res.status(500).json({
-        message: err instanceof Error ? err.message : 'Internal server error',
-      })
-    }
+  async joinRoom(payload: { roomId: string, user: Partial<User> }) {
+    const user = new User(payload.user.name, this.socket.id)
+
+    this.socket.join(payload.roomId)
+
+    onlineRooms[payload.roomId].users.push(user)
+
+    this.io.to(payload.roomId).emit('room:updated', onlineRooms[payload.roomId])
+  }
+
+  async leaveRoom(payload: { roomId: string }) {
+    const onlineUsers = onlineRooms[payload.roomId].users
+
+    const userIndex = onlineUsers.findIndex(userData => userData._id === this.socket.id)
+    onlineUsers.splice(userIndex, 1)
+
+    this.io.to(payload.roomId).emit('room:updated', onlineRooms[payload.roomId])
+
+    this.io.to(this.socket.id).emit('room:leave', onlineRooms[payload.roomId])
+  }
+
+  async deleteRoom(room: unknown) {
+    console.log('room', room)
   }
 }
