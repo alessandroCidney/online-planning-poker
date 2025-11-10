@@ -16,14 +16,14 @@ export class RoomController {
     this.socket = socket
   }
 
-  createRoom() {
+  createRoom(userData: Partial<User>) {
     const room = new Room()
 
     room.ownerIds.push(this.socket.id)
 
     onlineRooms[room._id] = room
 
-    this.joinRoom(room._id, { name: 'Sem Nome' })
+    this.joinRoom(room._id, { name: userData.name })
 
     return room
   }

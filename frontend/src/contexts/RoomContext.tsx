@@ -8,7 +8,7 @@ import type { User } from '../types/users'
 import type { SocketResponse } from '../types/socket'
 
 interface RoomContextValue {
-  createRoom: () => Promise<void>
+  createRoom: (userData: Partial<User>) => Promise<void>
   joinRoom: (roomId: string, userData: Partial<User>) => Promise<void>
 
   roomData?: Room
@@ -51,11 +51,11 @@ export function RoomContextProvider({ children }: RoomContextProviderProps) {
     setRoomData(updatedRoom)
   }
 
-  async function createRoom() {
+  async function createRoom(userData: Partial<User>) {
     const newSocket = await connectToSocket()
 
     const createRoomResponse = await new Promise<SocketResponse<Room>>((resolve) => {
-      newSocket.emit('room:create', (response: SocketResponse<Room>) => {
+      newSocket.emit('room:create', userData, (response: SocketResponse<Room>) => {
         resolve(response)
       })
     })
@@ -96,6 +96,8 @@ export function RoomContextProvider({ children }: RoomContextProviderProps) {
       setRoomData(joinResponse.data)
 
       newSocket.on('room:updated', updateRoom)
+
+      navigate(`/rooms/${joinResponse.data._id}`)
     }
   }, [connectToSocket, navigate])
 

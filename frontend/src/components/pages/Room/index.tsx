@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 import { AppButton } from '../../commons/AppButton'
 
@@ -7,13 +7,11 @@ import { useRoom } from '../../../hooks/useRoom'
 
 import { StyledAside, StyledMain, StyledSection, StyledCard } from './styles'
 
-// https://react.dev/learn/you-might-not-need-an-effect#initializing-the-application
-let loadedOnce = false
-
 export function Room() {
-  const { joinRoom, roomData, socket } = useRoom()
-
+  const navigate = useNavigate()
   const { roomId } = useParams()
+
+  const { roomData, socket } = useRoom()
 
   const [loading, setLoading] = useState({
     createStory: false,
@@ -82,19 +80,13 @@ export function Room() {
   console.log('render room page')
 
   useEffect(() => {
-    console.log('room use effect', 'roomData:', !!roomData, 'roomId:', roomId, 'loadedOnce:',loadedOnce)
-
-    if (!roomData && roomId && !loadedOnce) {
-      console.log('not connected')
-      joinRoom(roomId, { name: 'Test Username' })
-    } else {
-      console.log('already connected')
+    if (!roomData) {
+      navigate({
+        pathname: '/',
+        search: `?room=${roomId}`,
+      })
     }
-
-    if (!loadedOnce) {
-      loadedOnce = true
-    }
-  }, [joinRoom, roomId, roomData])
+  }, [navigate, roomData, roomId])
 
   return (
     <StyledMain>

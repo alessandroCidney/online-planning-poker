@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSearchParams } from 'react-router'
 
 import { AppButton } from '../../commons/AppButton'
 
@@ -9,19 +10,14 @@ import { StyledMain, Form, FloatingH1, FormField, FieldTitle, FieldInput, FormBu
 export function Home() {
   const roomContext = useRoom()
 
+  const [searchParams] = useSearchParams()
+
   const [enterRoomPayload, setEnterRoomPayload] = useState({
-    code: '',
+    code: searchParams.get('room') ?? '',
     name: '',
   })
   
-  const [formStep, setFormStep] = useState<'room' | 'user'>('room')
-
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setEnterRoomPayload({
-      ...enterRoomPayload,
-      [event.target.name]: event.target.value,
-    })
-  }
+  const [formStep, setFormStep] = useState<'room' | 'user'>(searchParams.get('room') ? 'user': 'room')
 
   function handleNextStep(event: React.SyntheticEvent) {
     event.preventDefault()
@@ -29,19 +25,13 @@ export function Home() {
     setFormStep('user')
   }
 
-  async function handleCreateRoom() {
-    try {
-      roomContext.createRoom()
-    } catch (err) {
-      console.error('err', err)
-    }
-  }
-
   async function handleFinish(event: React.SyntheticEvent) {
     event.preventDefault()
 
-    if (!enterRoomPayload.code) {
-      await handleCreateRoom()
+    if (enterRoomPayload.code) {
+      await roomContext.joinRoom(enterRoomPayload.code, { name: enterRoomPayload.name })
+    } else {
+      await roomContext.createRoom({ name: enterRoomPayload.name })
     }
   }
   
@@ -65,10 +55,10 @@ export function Home() {
                 </FieldTitle>
 
                 <FieldInput
-                  name='code'
                   type='text'
                   placeholder='XXXXXX'
-                  onChange={handleInputChange}
+                  value={enterRoomPayload.code}
+                  onChange={(e) => setEnterRoomPayload({ ...enterRoomPayload, code: e.target.value })}
                 />
 
                 <FormButton>
@@ -91,16 +81,20 @@ export function Home() {
                 Escolha seu nome
               </h2>
 
+              <p>
+                Entrando na sala { enterRoomPayload.code }
+              </p>
+
               <FormField>
                 <FieldTitle>
                   Como deseja ser chamado?
                 </FieldTitle>
 
                 <FieldInput
-                  name='name'
                   type='text'
                   placeholder='Potato Chips'
-                  onChange={handleInputChange}
+                  value={enterRoomPayload.name}
+                  onChange={(e) => setEnterRoomPayload({ ...enterRoomPayload, name: e.target.value })}
                 />
 
                 <AppButton>

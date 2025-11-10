@@ -23,8 +23,8 @@ function setupRoomGeneralEvents(roomController: RoomController, io: Server) {
 }
 
 function setupRoomIndividualEvents(roomController: RoomController, socket: Socket) {
-  socket.on('room:create', (callback: SocketCallback) => {
-    const newRoom = roomController.createRoom()
+  socket.on('room:create', (userData: Partial<User>, callback: SocketCallback) => {
+    const newRoom = roomController.createRoom(userData)
 
     callback({
       status: 201,
