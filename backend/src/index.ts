@@ -4,8 +4,10 @@ import { Server } from 'socket.io'
 import cors from 'cors'
 import 'dotenv/config'
 
-import { setupRoomEvents } from './handlers/roomHandler'
 import { onlineRooms } from './controllers/RoomController'
+
+import { setupRoomEvents } from './handlers/roomHandler'
+import { setupStoryEvents } from './handlers/storyHandler'
 
 const app = express()
 
@@ -37,6 +39,7 @@ io.on('connection', (socket) => {
   console.log('new socket connection', socket.id)
 
   setupRoomEvents(io, socket)
+  setupStoryEvents(io, socket)
 })
 
 httpServer.listen(process.env.PORT, () => {

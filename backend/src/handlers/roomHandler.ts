@@ -7,19 +7,29 @@ import { Room } from '../models/Room'
 
 type SocketCallback<T> = (param: T) => void
 
-function setupRoomEvents(io: Server, socket: Socket) {
-  console.log('setupRoomEvents', socket?.id)
+let loadedGeneralEvents = false
 
-  const roomControler = new RoomController(io, socket)
+function setupRoomGeneralEvents(roomController: RoomController, io: Server) {
+  if (!loadedGeneralEvents) {
+    loadedGeneralEvents = true
 
-  socket.on('room:create', async (callback: SocketCallback<Room>) => {
-    const newRoom = roomControler.createRoom()
+    io.of('/').adapter.on('delete-room', (roomId) => {
+      if (onlineRooms[roomId]) {
+        roomController.deleteRoom(roomId)
+      }
+    })
+  }
+}
+
+function setupRoomIndividualEvents(roomController: RoomController, socket: Socket) {
+  socket.on('room:create', (callback: SocketCallback<Room>) => {
+    const newRoom = roomController.createRoom()
 
     callback(newRoom)
   })
 
-  socket.on('room:join', async (roomId: string, userData: Partial<User>, callback: SocketCallback<Room>) => {
-    const joinedRoom = roomControler.joinRoom(roomId, userData)
+  socket.on('room:join', (roomId: string, userData: Partial<User>, callback: SocketCallback<Room>) => {
+    const joinedRoom = roomController.joinRoom(roomId, userData)
 
     callback(joinedRoom)
   })
@@ -27,18 +37,17 @@ function setupRoomEvents(io: Server, socket: Socket) {
   socket.on('disconnecting', () => {
     for (const roomId of socket.rooms) {
       if (onlineRooms[roomId]) {
-        roomControler.leaveRoom(roomId)
+        roomController.leaveRoom(roomId)
       }
     }
   })
+}
 
-  // Socket IO Events
+function setupRoomEvents(io: Server, socket: Socket) {
+  const roomController = new RoomController(io, socket)
 
-  io.of('/').adapter.on('delete-room', (roomId) => {
-    if (onlineRooms[roomId]) {
-      roomControler.deleteRoom(roomId)
-    }
-  })
+  setupRoomIndividualEvents(roomController, socket)
+  setupRoomGeneralEvents(roomController, io)
 }
 
 export {

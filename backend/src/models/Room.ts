@@ -7,11 +7,11 @@ export class Room {
   _id: string
 
   users: Record<string, User>
-  stories: Story[]
+  stories: Record<string, Story>
 
   ownerIds: string[]
 
-  constructor(users = {} as Record<string, User>, stories = [] as Story[], _id = uuidV4()) {
+  constructor(users = {} as Record<string, User>, stories = {} as Record<string, Story>, _id = uuidV4()) {
     this._id = _id
     this.users = users
     this.stories = stories
