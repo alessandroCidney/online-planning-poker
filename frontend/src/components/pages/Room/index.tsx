@@ -8,6 +8,7 @@ import { RoomSidebar } from './components/RoomSidebar'
 import { StyledMain, StyledSection, StyledCard, StyledCardsContainer } from './styles'
 import { PokerCard } from './components/PokerCard'
 import { RoomHeader } from './components/RoomHeader'
+import { RoomTable } from './components/RoomTable'
 
 export function Room() {
   const navigate = useNavigate()
@@ -94,6 +95,8 @@ export function Room() {
     <StyledMain>
       <StyledSection>
         <RoomHeader />
+
+        <RoomTable />
 
         <StyledCardsContainer>
           <PokerCard
