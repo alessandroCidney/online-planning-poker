@@ -7,8 +7,8 @@ import { SocketCallback } from '../types/socket'
 function setupStoryEvents(io: Server, socket: Socket) {
   const storyController = new StoryController(io, socket)
 
-  socket.on('story:create', (roomId: string, title: string, description: string, callback: SocketCallback) => {
-    const newStory = storyController.createStory(roomId, title, description)
+  socket.on('story:create', (roomId: string, title: string, callback: SocketCallback) => {
+    const newStory = storyController.createStory(roomId, title)
 
     callback({
       status: 201,

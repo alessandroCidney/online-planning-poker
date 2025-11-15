@@ -15,6 +15,21 @@
 :root {
   --theme-primary-color: #0496FF;
   --theme-primary-lighten-1-color: #1FA2FF;
+  --theme-primary-lighten-2-color: #33AAFF;
+  --theme-primary-lighten-3-color: #47B3FF;
   --theme-primary-darken-1-color: #008FF5;
   --theme-primary-darken-2-color: #0083E0;
+  --theme-primary-darken-3-color: #0077CC;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--theme-primary-darken-3-color);
+
+  border-radius: 9999px;
 }

@@ -1,7 +1,31 @@
+import { useState } from 'react'
+
 import { DefaultButton } from '../../../../commons/DefaultButton'
-import { StyledAside } from './styles'
+
+import { UsCard } from './components/UsCard'
+import { UsForm } from './components/UsForm'
+
+import { useRoom } from '../../../../../hooks/useRoom'
+
+import { StyledAside, StyledUsList, StyledContentContainer, StyledContentActions } from './styles'
 
 export function RoomSidebar() {
+  const roomContext = useRoom()
+
+  const [showForm, setShowForm] = useState(false)
+
+  console.log('render RoomSidebar')
+
+  async function createStory(title: string) {
+    await roomContext.createStory(title)
+
+    setShowForm(false)
+  }
+
+  async function removeStory(storyId: string) {
+    await roomContext.removeStory(storyId)
+  }
+
   return (
     <StyledAside>
       <header>
@@ -10,11 +34,38 @@ export function RoomSidebar() {
         </h2>
       </header>
 
-      <section>
-        <DefaultButton>
-          Nova Tarefa
-        </DefaultButton>
-      </section>
+      <StyledContentContainer>
+        <StyledContentActions>
+          <DefaultButton
+            disabled={showForm}
+            block
+            onClick={() => setShowForm(true)}
+          >
+            Nova Tarefa
+          </DefaultButton>
+        </StyledContentActions>
+
+        <StyledUsList>
+          {
+            showForm && (
+              <UsForm
+                onSubmit={createStory}
+                onCancel={() => setShowForm(false)}
+              />
+            )
+          }
+
+          {
+            Object.values(roomContext.roomData?.stories ?? {}).map(storyData => (
+              <UsCard
+                key={storyData._id}
+                storyData={storyData}
+                handleRemove={removeStory}
+              />
+            ))
+          }
+        </StyledUsList>
+      </StyledContentContainer>
     </StyledAside>
   )
 }

@@ -13,8 +13,8 @@ export class StoryController {
     this.socket = socket
   }
 
-  createStory(roomId: string, title: string, description: string) {
-    const story = new Story(title, description)
+  createStory(roomId: string, title: string) {
+    const story = new Story(title)
 
     onlineRooms[roomId].stories[story._id] = story
 

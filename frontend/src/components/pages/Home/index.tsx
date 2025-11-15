@@ -5,7 +5,7 @@ import { DefaultButton } from '../../commons/DefaultButton'
 
 import { useRoom } from '../../../hooks/useRoom'
 
-import { StyledMain, Form, FloatingH1, FormField, FieldTitle, FieldInput, FormButton, FormBreak } from './styles'
+import { StyledMain, Form, FloatingH1, FormField, FieldTitle, FieldInput, FormBreak } from './styles'
 
 export function Home() {
   const navigate = useNavigate()
@@ -69,16 +69,16 @@ export function Home() {
                   onChange={(e) => setEnterRoomPayload({ ...enterRoomPayload, code: e.target.value })}
                 />
 
-                <FormButton>
+                <DefaultButton block>
                   Entrar
-                </FormButton>
+                </DefaultButton>
               </FormField>
 
               <FormBreak>
                 ou
               </FormBreak>
 
-              <DefaultButton>
+              <DefaultButton block>
                 Crie uma nova
               </DefaultButton>
             </Form>
@@ -105,7 +105,7 @@ export function Home() {
                   onChange={(e) => setEnterRoomPayload({ ...enterRoomPayload, name: e.target.value })}
                 />
 
-                <DefaultButton>
+                <DefaultButton block>
                   Continuar
                 </DefaultButton>
               </FormField>

@@ -62,34 +62,6 @@ export const FloatingH1 = styled.h1`
   font-size: 3rem;
 `
 
-export const FormButton = styled.button`
-  display: block;
-
-  width: 100%;
-
-  padding: 10px;
-
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-
-  background-color: var(--theme-primary-color);
-
-  border: none;
-  border-radius: 8px;
-
-  cursor: pointer;
-
-  transition: all .1s ease-in-out;
-
-  &:hover {
-    background-color: white;
-    color: var(--theme-primary-color);;
-
-    outline: 4px solid var(--theme-primary-color);
-  }
-`
-
 export const FormBreak = styled.p`
   display: flex;
   align-items: center;
