@@ -34,6 +34,10 @@ export function RoomSidebar() {
     await roomContext.concludeVoting(storyId)
   }
 
+  async function restartVoting(storyId: string) {
+    await roomContext.restartVoting(storyId)
+  }
+
   return (
     <StyledAside>
       <header>
@@ -71,6 +75,7 @@ export function RoomSidebar() {
                 removeStory={removeStory}
                 startVoting={startVoting}
                 concludeVoting={concludeVoting}
+                restartVoting={restartVoting}
               />
             ))
           }

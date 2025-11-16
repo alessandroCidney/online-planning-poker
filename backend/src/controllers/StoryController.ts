@@ -52,4 +52,13 @@ export class StoryController {
 
     return onlineRooms[roomId].stories[storyId]
   }
+
+  restartVoting(roomId: string, storyId: string) {
+    onlineRooms[roomId].stories[storyId].votes = {}
+    onlineRooms[roomId].stories[storyId].votingStatus = 'in_progress'
+
+    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+
+    return onlineRooms[roomId].stories[storyId]
+  }
 }

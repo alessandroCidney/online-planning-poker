@@ -29,8 +29,6 @@ export const StyledHeader = styled.header`
 `
 
 export const StyledCardActions = styled.div`
-  position: relative;
-  
   flex: 1 1 0;
 
   width: 100%;
@@ -64,4 +62,27 @@ export const StyledWarning = styled.div`
 
   /* border: 3px solid #fff; */
   border-radius: 999px;
+`
+
+export const StyledVotingResult = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  color: var(--theme-primary-color);
+  font-weight: 600;
+  font-size: 1.5rem;
+
+  background-color: #fff;
+
+  border-radius: 50%;
+`
+
+export const FloatingActions = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `

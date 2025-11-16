@@ -18,6 +18,7 @@ interface RoomContextValue {
   startVoting: (storyId: string) => Promise<void>
   saveVote: (storyId: string, voteValue: number) => Promise<void>
   concludeVoting: (storyId: string) => Promise<void>
+  restartVoting: (storyId: string) => Promise<void>
 
   roomData?: Room
 
@@ -211,6 +212,24 @@ export function RoomContextProvider({ children }: RoomContextProviderProps) {
     }
   }, [getSocket, roomData])
 
+  const restartVoting = useCallback(async (storyId: string) => {
+    const currentSocket = await getSocket()
+
+    if (!roomData) {
+      throw new Error('The room data has not yet been loaded.')
+    }
+
+    const response = await new Promise<SocketResponse<Story>>((resolve) => {
+      currentSocket.emit('story:restart-voting', roomData._id, storyId, (res: SocketResponse<Story>) => {
+        resolve(res)
+      })
+    })
+
+    if (response.error) {
+      window.alert('Não foi possível reiniciar a votação.')
+    }
+  }, [getSocket, roomData])
+
   return (
     <RoomContext.Provider
       value={{
@@ -223,6 +242,7 @@ export function RoomContextProvider({ children }: RoomContextProviderProps) {
         startVoting,
         saveVote,
         concludeVoting,
+        restartVoting,
 
         roomData,
         socket,

@@ -56,6 +56,16 @@ function setupStoryEvents(io: Server, socket: Socket) {
       data: updatedStory,
     })
   })
+
+  socket.on('story:restart-voting', (roomId: string, storyId: string, callback: SocketCallback) => {
+    const updatedStory = storyController.restartVoting(roomId, storyId)
+
+    callback({
+      status: 200,
+      error: false,
+      data: updatedStory,
+    })
+  })
 }
 
 export {
