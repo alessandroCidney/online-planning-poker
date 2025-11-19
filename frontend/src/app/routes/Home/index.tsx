@@ -7,7 +7,7 @@ import { createRoom, joinRoom } from '@/features/room/roomSlice'
 
 import { useRedux } from '@/hooks/useRedux'
 
-import { StyledMain, Form, FloatingH1, FormField, FieldTitle, FieldInput, FormBreak, FormActions } from './styles'
+import { StyledMain, Form, FormField, FieldTitle, FieldInput, FormBreak, FormActions } from './styles'
 
 export function Home() {
   const navigate = useNavigate()
@@ -60,10 +60,6 @@ export function Home() {
 
   return (
     <StyledMain>
-      <FloatingH1>
-        Online Planning Poker
-      </FloatingH1>
-
       {
         formStep === 'room'
           ? (
@@ -142,9 +138,8 @@ export function Home() {
                 </DefaultButton>
 
                 <DefaultButton
-                  color='#fff'
-                  hoverColor='#eee'
-                  textColor='#000'
+                  color='var(--theme-primary-lighten-2-color)'
+                  hoverColor='var(--theme-primary-lighten-1-color)'
                   block
                   type='button'
                   onClick={() => setFormStep('room')}

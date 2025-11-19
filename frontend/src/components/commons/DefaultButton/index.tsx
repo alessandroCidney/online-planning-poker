@@ -4,6 +4,7 @@ import { StyledButton } from './styles'
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: string
   textColor?: string
+  textHoverColor?: string
   hoverColor?: string
   minWidth?: string
   iconSize?: string
@@ -20,6 +21,7 @@ export function DefaultButton({
 
   color,
   textColor,
+  textHoverColor,
   hoverColor,
   minWidth,
   iconSize,
@@ -63,6 +65,7 @@ export function DefaultButton({
       className={adaptedClasses}
       $color={color}
       $textColor={textColor}
+      $textHoverColor={textHoverColor}
       $hoverColor={hoverColor}
       $minWidth={minWidth}
       $iconSize={iconSize}

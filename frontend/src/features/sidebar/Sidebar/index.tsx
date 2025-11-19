@@ -22,22 +22,24 @@ export function Sidebar({ children, title }: SidebarProps) {
 
   const sidebarOpen = useAppSelector(state => state.sidebar.open)
 
-  return (
-    <StyledAside>
-      <header>
-        <h2>
-          { title } { sidebarOpen ? 'open' : 'closed' }
-        </h2>
+  return sidebarOpen
+    ? (
+      <StyledAside>
+        <header>
+          <h2>
+            { title }
+          </h2>
 
-        <DefaultButton
-          icon
-          onClick={() => dispatch(sidebarOpen ? closeSidebar() : openSidebar())}
-        >
-          <BsX size={30} />
-        </DefaultButton>
-      </header>
+          <DefaultButton
+            icon
+            onClick={() => dispatch(sidebarOpen ? closeSidebar() : openSidebar())}
+          >
+            <BsX size={30} />
+          </DefaultButton>
+        </header>
 
-      { children }
-    </StyledAside>
-  )
+        { children }
+      </StyledAside>
+    )
+    : null
 }

@@ -14,7 +14,14 @@ export const StyledHeader = styled.header`
 
   background-color: #f9f9f9;
 
-  h1 {
+  > h1 {
     font-size: 1.5rem;
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
 `

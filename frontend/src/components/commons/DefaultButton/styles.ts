@@ -3,6 +3,7 @@ import styled from 'styled-components'
 interface ButtonProps {
   $color?: string
   $textColor?: string
+  $textHoverColor?: string
   $hoverColor?: string
 
   $minWidth?: string
@@ -34,6 +35,8 @@ export const StyledButton = styled.button<ButtonProps>`
   transition: all .1s ease-in-out;
 
   &:hover {
+    color: ${props => props.$textHoverColor || '#fff'};
+    
     background-color: ${props => props.$hoverColor || 'var(--theme-primary-darken-2-color)'};
   }
 

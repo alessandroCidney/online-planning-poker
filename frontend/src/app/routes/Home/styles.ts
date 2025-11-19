@@ -56,16 +56,6 @@ export const FieldInput = styled.input`
   }
 `
 
-export const FloatingH1 = styled.h1`
-  position: absolute;
-
-  top: 20px;
-  left: 20px;
-
-  color: rgb(255, 255, 255, .8);
-  font-size: 3rem;
-`
-
 export const FormBreak = styled.p`
   display: flex;
   align-items: center;
