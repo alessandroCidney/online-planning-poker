@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, Tuple } from '@reduxjs/toolkit'
 
-import { setupSocketMiddleware } from '@/utils/socket'
+import { setupSocketMiddleware } from '@/features/room/api'
 
 import sidebarReducer from '../features/sidebar/sidebarSlice'
 import notificationsReducer from '../features/notifications/notificationsSlice'

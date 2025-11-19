@@ -1,0 +1,121 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
+
+import * as roomSlice from '@/features/room/roomSlice'
+
+import type { Room } from '@/types/rooms'
+import type { SocketResponse } from '@/types/socket'
+import type { Story } from '@/types/stories'
+
+export function setupStoryHandlers(
+  action: PayloadAction<unknown>,
+  makeSureRoomIsLoaded: () => Room,
+  emitMessage: <T>(type: string, payload: unknown) => Promise<SocketResponse<T>>,
+) {
+  async function createStory(title: string) {
+    const currentRoom = makeSureRoomIsLoaded()
+
+    await emitMessage<Story>('story:create', {
+      roomId: currentRoom._id,
+      title,
+    })
+  }
+
+  async function removeStory(storyId: string) {
+    const currentRoom = makeSureRoomIsLoaded()
+
+    await emitMessage('story:remove', {
+      roomId: currentRoom._id,
+      storyId,
+    })
+  }
+
+  async function startVoting(storyId: string) {
+    const currentRoom = makeSureRoomIsLoaded()
+
+    await emitMessage('story:start-voting', {
+      roomId: currentRoom._id,
+      storyId,
+    })
+  }
+
+  async function saveVote(storyId: string, voteValue: number) {
+    const currentRoom = makeSureRoomIsLoaded()
+
+    await emitMessage('story:save-vote', {
+      roomId: currentRoom._id,
+      storyId,
+      voteValue,
+    })
+  }
+
+  async function concludeVoting(storyId: string) {
+    const currentRoom = makeSureRoomIsLoaded()
+
+    await emitMessage('story:conclude-voting', {
+      roomId: currentRoom._id,
+      storyId,
+    })
+  }
+
+  async function restartVoting(storyId: string) {
+    const currentRoom = makeSureRoomIsLoaded()
+
+    await emitMessage('story:restart-voting', {
+      roomId: currentRoom._id,
+      storyId,
+    })
+  }
+
+  switch (action.type) {
+    case 'room/createStory': {
+      const actionPayload = action.payload as Parameters<typeof roomSlice['createStory']>[0]
+  
+      createStory(actionPayload.title)
+  
+      return { stopAction: true }
+    }
+  
+    case 'room/removeStory': {
+      const actionPayload = action.payload as Parameters<typeof roomSlice['removeStory']>[0]
+  
+      removeStory(actionPayload.storyId)
+  
+      return { stopAction: true }
+    }
+  
+    case 'room/startVoting': {
+      const actionPayload = action.payload as Parameters<typeof roomSlice['startVoting']>[0]
+  
+      startVoting(actionPayload.storyId)
+  
+      return { stopAction: true }
+    }
+  
+    case 'room/saveVote': {
+      const actionPayload = action.payload as Parameters<typeof roomSlice['saveVote']>[0]
+  
+      saveVote(actionPayload.storyId, actionPayload.voteValue)
+  
+      return { stopAction: true }
+    }
+  
+    case 'room/concludeVoting': {
+      const actionPayload = action.payload as Parameters<typeof roomSlice['concludeVoting']>[0]
+  
+      concludeVoting(actionPayload.storyId)
+  
+      return { stopAction: true }
+    }
+  
+    case 'room/restartVoting': {
+      const actionPayload = action.payload as Parameters<typeof roomSlice['restartVoting']>[0]
+  
+      restartVoting(actionPayload.storyId)
+  
+      return { stopAction: true }
+    }
+  
+    default:
+      return { stopAction: false }
+  }
+}
