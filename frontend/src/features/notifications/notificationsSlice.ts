@@ -4,12 +4,14 @@ export interface NotificationsState {
   active: boolean
   title: string
   description: string
+  type: 'success' | 'error'
 }
 
 const initialState: NotificationsState = {
   active: false,
   title: '',
   description: '',
+  type: 'success',
 }
 
 export const notificationsSlide = createSlice({
@@ -18,9 +20,10 @@ export const notificationsSlide = createSlice({
   initialState,
 
   reducers: {
-    showMessage: (state, action: PayloadAction<{ title: string, description: string }>) => {
+    showMessage: (state, action: PayloadAction<{ title: string, description: string, type: NotificationsState['type'] }>) => {
       state.title = action.payload.title
       state.description = action.payload.description
+      state.type = action.payload.type
       state.active = true
     },
 

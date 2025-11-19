@@ -1,6 +1,6 @@
 import { useRedux } from '@/hooks/useRedux'
 
-import { showMessage as showMessageReducer, hideMessage as hideMessageReducer } from '../notificationsSlice'
+import { showMessage as showMessageReducer, hideMessage as hideMessageReducer, type NotificationsState } from '../notificationsSlice'
 
 import { waitFor } from '@/utils/time'
 
@@ -10,12 +10,7 @@ export function useNotifications() {
   const dispatch = useAppDispatch()
   const currentNotificationsData = useAppSelector(state => state.notifications)
 
-  interface ShowMessageProps {
-    title: string
-    description: string
-  }
-
-  async function showMessage(payload: ShowMessageProps) {
+  async function showMessage(payload: Omit<NotificationsState, 'active'>) {
     if (currentNotificationsData.active) {
       await waitFor(() => !currentNotificationsData.active)
     }
@@ -24,7 +19,7 @@ export function useNotifications() {
 
     setTimeout(() => {
       dispatch(hideMessageReducer())
-    })
+    }, 5000)
   }
 
   return {

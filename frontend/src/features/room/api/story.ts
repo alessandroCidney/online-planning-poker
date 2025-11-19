@@ -31,6 +31,7 @@ export function setupStoryHandlers(
     store.dispatch(notificationsSlice.showMessage({
       title: 'Tarefa adicionada!',
       description: 'A nova tarefa foi adicionada com sucesso.',
+      type: 'success',
     }))
 
     setTimeout(() => {

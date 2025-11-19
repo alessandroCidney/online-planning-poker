@@ -72,4 +72,16 @@ export const StyledButton = styled.button<ButtonProps>`
     -o-user-select: none;
     user-select: none;
   }
+
+  &.default-button--readonly {
+    pointer-events: none;
+
+    // prevent copy text
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
 `

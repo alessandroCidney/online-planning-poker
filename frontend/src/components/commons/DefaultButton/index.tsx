@@ -12,8 +12,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   block?: boolean
   icon?: boolean
   disabled?: boolean
+  readonly?: boolean
 
   prependIcon?: ReactNode
+  appendIcon?: ReactNode
 }
 
 export function DefaultButton({
@@ -31,8 +33,10 @@ export function DefaultButton({
   block,
   icon,
   disabled,
+  readonly,
   
   prependIcon,
+  appendIcon,
   ...rest
 }: ButtonProps) {
   const adaptedClasses = useMemo(
@@ -55,9 +59,13 @@ export function DefaultButton({
         customClassesArr.push('default-button--disabled')
       }
 
+      if (readonly) {
+        customClassesArr.push('default-button--readonly')
+      }
+
       return `${customClassesArr.join(' ')} ${className}`
     },
-    [block, icon, prependIcon, disabled, className],
+    [block, icon, prependIcon, disabled, readonly, className],
   )
   
   return (
@@ -74,6 +82,8 @@ export function DefaultButton({
       { prependIcon }
 
       { children }
+
+      { appendIcon }
     </StyledButton>
   )
 }

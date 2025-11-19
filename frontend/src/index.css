@@ -20,6 +20,9 @@
   --theme-primary-darken-1-color: #008FF5;
   --theme-primary-darken-2-color: #0083E0;
   --theme-primary-darken-3-color: #0077CC;
+  --theme-error-color: #EA3546;
+  --theme-error-darken-1-color: #E82135;
+  --theme-error-darken-2-color: #DE172B;
 }
 
 *::-webkit-scrollbar {

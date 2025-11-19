@@ -8,6 +8,7 @@ import { NotificationSnackbar } from '@/features/notifications/NotificationSnack
 
 import { generateQuadraticEquation } from '@/utils/calc'
 
+import { RoomCodeCopyButton } from './components/RoomCodeCopyButton'
 import { RoomSidebar } from './components/RoomSidebar'
 import { RoomHeader } from './components/RoomHeader'
 import { RoomTable } from './components/RoomTable'
@@ -191,6 +192,8 @@ export function Room() {
         </StyledCardsContainer>
       
         <NotificationSnackbar />
+
+        <RoomCodeCopyButton />
       </StyledSection>
 
       <RoomSidebar />

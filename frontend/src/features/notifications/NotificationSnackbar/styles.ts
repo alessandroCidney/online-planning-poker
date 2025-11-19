@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-export const StyledFigure = styled.figure`
+interface StyledFigureProps {
+  $backgroundColor?: string
+}
+
+export const StyledFigure = styled.figure<StyledFigureProps>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -17,7 +21,7 @@ export const StyledFigure = styled.figure`
 
   color: #fff;
 
-  background-color: var(--theme-primary-color);
+  background-color: ${props => props.$backgroundColor || 'var(--theme-primary-color)'};
 
   border-radius: 20px;
 
@@ -25,6 +29,10 @@ export const StyledFigure = styled.figure`
     font-size: 1.2rem;
     font-weight: 600;
   }
+`
+
+export const StyledContentContainer = styled.div`
+  margin-right: 20px;
 `
 
 export const FloatingActions = styled.div`
