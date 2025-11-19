@@ -2,8 +2,6 @@ import { Socket, Server } from 'socket.io'
 
 import { RoomController, onlineRooms } from '../controllers/RoomController'
 
-import { User } from '../models/User'
-
 import { AppError } from '../helpers/error'
 
 import { SocketCallback } from '../types/socket'
@@ -23,8 +21,8 @@ function setupRoomGeneralEvents(roomController: RoomController, io: Server) {
 }
 
 function setupRoomIndividualEvents(roomController: RoomController, socket: Socket) {
-  socket.on('room:create', (userData: Partial<User>, callback: SocketCallback) => {
-    const newRoom = roomController.createRoom(userData)
+  socket.on('room:create', (payload: Parameters<typeof roomController.createRoom>[0], callback: SocketCallback) => {
+    const newRoom = roomController.createRoom(payload)
 
     callback({
       status: 201,
@@ -33,9 +31,9 @@ function setupRoomIndividualEvents(roomController: RoomController, socket: Socke
     })
   })
 
-  socket.on('room:join', (roomId: string, userData: Partial<User>, callback: SocketCallback) => {
+  socket.on('room:join', (payload: Parameters<typeof roomController.joinRoom>[0], callback: SocketCallback) => {
     try {
-      const joinedRoom = roomController.joinRoom(roomId, userData)
+      const joinedRoom = roomController.joinRoom(payload)
 
       callback({
         status: 200,
@@ -57,7 +55,7 @@ function setupRoomIndividualEvents(roomController: RoomController, socket: Socke
   socket.on('disconnecting', () => {
     for (const roomId of socket.rooms) {
       if (onlineRooms[roomId]) {
-        roomController.leaveRoom(roomId)
+        roomController.leaveRoom({ roomId })
       }
     }
   })

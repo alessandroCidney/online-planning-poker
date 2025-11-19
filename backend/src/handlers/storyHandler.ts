@@ -7,8 +7,8 @@ import { SocketCallback } from '../types/socket'
 function setupStoryEvents(io: Server, socket: Socket) {
   const storyController = new StoryController(io, socket)
 
-  socket.on('story:create', (roomId: string, title: string, callback: SocketCallback) => {
-    const newStory = storyController.createStory(roomId, title)
+  socket.on('story:create', (payload: Parameters<typeof storyController.createStory>[0], callback: SocketCallback) => {
+    const newStory = storyController.createStory(payload)
 
     callback({
       status: 201,
@@ -17,8 +17,8 @@ function setupStoryEvents(io: Server, socket: Socket) {
     })
   })
 
-  socket.on('story:remove', (roomId: string, storyId: string, callback: SocketCallback) => {
-    storyController.removeStory(roomId, storyId)
+  socket.on('story:remove', (payload: Parameters<typeof storyController.removeStory>[0], callback: SocketCallback) => {
+    storyController.removeStory(payload)
 
     callback({
       status: 200,
@@ -27,8 +27,8 @@ function setupStoryEvents(io: Server, socket: Socket) {
     })
   })
 
-  socket.on('story:start-voting', (roomId: string, storyId: string, callback: SocketCallback) => {
-    const updatedStory = storyController.startVoting(roomId, storyId)
+  socket.on('story:start-voting', (payload: Parameters<typeof storyController.startVoting>[0], callback: SocketCallback) => {
+    const updatedStory = storyController.startVoting(payload)
 
     callback({
       status: 200,
@@ -37,8 +37,8 @@ function setupStoryEvents(io: Server, socket: Socket) {
     })
   })
 
-  socket.on('story:save-vote', (roomId: string, storyId: string, voteValue: number, callback: SocketCallback) => {
-    const updatedStory = storyController.saveVote(roomId, storyId, voteValue)
+  socket.on('story:save-vote', (payload: Parameters<typeof storyController.saveVote>[0], callback: SocketCallback) => {
+    const updatedStory = storyController.saveVote(payload)
 
     callback({
       status: 200,
@@ -47,8 +47,8 @@ function setupStoryEvents(io: Server, socket: Socket) {
     })
   })
 
-  socket.on('story:conclude-voting', (roomId: string, storyId: string, callback: SocketCallback) => {
-    const updatedStory = storyController.concludeVoting(roomId, storyId)
+  socket.on('story:conclude-voting', (payload: Parameters<typeof storyController.concludeVoting>[0], callback: SocketCallback) => {
+    const updatedStory = storyController.concludeVoting(payload)
 
     callback({
       status: 200,
@@ -57,8 +57,8 @@ function setupStoryEvents(io: Server, socket: Socket) {
     })
   })
 
-  socket.on('story:restart-voting', (roomId: string, storyId: string, callback: SocketCallback) => {
-    const updatedStory = storyController.restartVoting(roomId, storyId)
+  socket.on('story:restart-voting', (payload: Parameters<typeof storyController.restartVoting>[0], callback: SocketCallback) => {
+    const updatedStory = storyController.restartVoting(payload)
 
     callback({
       status: 200,

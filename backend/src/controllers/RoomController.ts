@@ -16,39 +16,39 @@ export class RoomController {
     this.socket = socket
   }
 
-  createRoom(userData: Partial<User>) {
+  createRoom(params: { userData: Partial<User> }) {
     const room = new Room()
 
     room.ownerIds.push(this.socket.id)
 
     onlineRooms[room._id] = room
 
-    this.joinRoom(room._id, { name: userData.name })
+    this.joinRoom({ roomId: room._id, userData: { name: params.userData.name } })
 
     return room
   }
 
-  joinRoom(roomId: string, userData: Partial<User>) {
-    if (!onlineRooms[roomId]) {
+  joinRoom(params: { roomId: string, userData: Partial<User> }) {
+    if (!onlineRooms[params.roomId]) {
       throw new AppError('Cannot found room', 404)
     }
 
-    const user = new User(userData.name, this.socket.id)
+    const user = new User(params.userData.name, this.socket.id)
 
-    this.socket.join(roomId)
+    this.socket.join(params.roomId)
 
-    onlineRooms[roomId].users[user._id] = user
+    onlineRooms[params.roomId].users[user._id] = user
 
-    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
 
-    return onlineRooms[roomId]
+    return onlineRooms[params.roomId]
   }
 
-  leaveRoom(roomId: string) {
-    delete onlineRooms[roomId].users[this.socket.id]
+  leaveRoom(params: { roomId: string }) {
+    delete onlineRooms[params.roomId].users[this.socket.id]
 
-    if (Object.keys(onlineRooms[roomId].users).length > 0) {
-      this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    if (Object.keys(onlineRooms[params.roomId].users).length > 0) {
+      this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
     }
   }
 

@@ -1,0 +1,24 @@
+import { combineReducers, configureStore, Tuple } from '@reduxjs/toolkit'
+
+import { setupSocketMiddleware } from '@/utils/socket'
+
+import sidebarReducer from '../features/sidebar/sidebarSlice'
+import notificationsReducer from '../features/notifications/notificationsSlice'
+import roomReducer from '../features/room/roomSlice'
+
+const rootReducer = combineReducers({
+  sidebar: sidebarReducer,
+  notifications: notificationsReducer,
+  room: roomReducer,
+})
+
+export const store = configureStore({
+  reducer: rootReducer,
+
+  middleware: () => new Tuple(setupSocketMiddleware),
+})
+
+export type RootState = ReturnType<typeof rootReducer>
+
+export type AppDispatch = typeof store.dispatch
+export type AppStore = typeof store

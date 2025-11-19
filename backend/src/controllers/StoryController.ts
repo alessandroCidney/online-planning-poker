@@ -13,52 +13,52 @@ export class StoryController {
     this.socket = socket
   }
 
-  createStory(roomId: string, title: string) {
-    const story = new Story(title)
+  createStory(params: { roomId: string, title: string }) {
+    const story = new Story(params.title)
 
-    onlineRooms[roomId].stories[story._id] = story
+    onlineRooms[params.roomId].stories[story._id] = story
 
-    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
 
     return story
   }
 
-  removeStory(roomId: string, storyId: string) {
-    delete onlineRooms[roomId].stories[storyId]
+  removeStory(params: { roomId: string, storyId: string }) {
+    delete onlineRooms[params.roomId].stories[params.storyId]
 
-    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
   }
 
-  startVoting(roomId: string, storyId: string) {
-    onlineRooms[roomId].stories[storyId].votingStatus = 'in_progress'
+  startVoting(params: { roomId: string, storyId: string }) {
+    onlineRooms[params.roomId].stories[params.storyId].votingStatus = 'in_progress'
 
-    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
 
-    return onlineRooms[roomId].stories[storyId]
+    return onlineRooms[params.roomId].stories[params.storyId]
   }
 
-  saveVote(roomId: string, storyId: string, voteValue: number) {
-    onlineRooms[roomId].stories[storyId].votes[this.socket.id] = voteValue
+  saveVote(params: { roomId: string, storyId: string, voteValue: number }) {
+    onlineRooms[params.roomId].stories[params.storyId].votes[this.socket.id] = params.voteValue
 
-    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
 
-    return onlineRooms[roomId].stories[storyId]
+    return onlineRooms[params.roomId].stories[params.storyId]
   }
 
-  concludeVoting(roomId: string, storyId: string) {
-    onlineRooms[roomId].stories[storyId].votingStatus = 'concluded'
+  concludeVoting(params: { roomId: string, storyId: string }) {
+    onlineRooms[params.roomId].stories[params.storyId].votingStatus = 'concluded'
 
-    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
 
-    return onlineRooms[roomId].stories[storyId]
+    return onlineRooms[params.roomId].stories[params.storyId]
   }
 
-  restartVoting(roomId: string, storyId: string) {
-    onlineRooms[roomId].stories[storyId].votes = {}
-    onlineRooms[roomId].stories[storyId].votingStatus = 'in_progress'
+  restartVoting(params: { roomId: string, storyId: string }) {
+    onlineRooms[params.roomId].stories[params.storyId].votes = {}
+    onlineRooms[params.roomId].stories[params.storyId].votingStatus = 'in_progress'
 
-    this.io.to(roomId).emit('room:updated', onlineRooms[roomId])
+    this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
 
-    return onlineRooms[roomId].stories[storyId]
+    return onlineRooms[params.roomId].stories[params.storyId]
   }
 }

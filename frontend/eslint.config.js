@@ -42,6 +42,8 @@ export default defineConfig([
       '@stylistic/semi': ['error', 'never'],
 
       'react-refresh/only-export-components': 'off',
+
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
 ])

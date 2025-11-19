@@ -1,19 +1,15 @@
 import { Routes, Route } from 'react-router'
 
-import { Home } from './components/pages/Home'
-import { Room } from './components/pages/Room'
-
-import { RoomContextProvider } from './contexts/RoomContext'
+import { Home } from './app/routes/Home'
+import { Room } from './app/routes/Room'
 
 function App() {
   return (
-    <RoomContextProvider>
-      <Routes>
-        <Route index element={<Home />} />
+    <Routes>
+      <Route index element={<Home />} />
 
-        <Route path='rooms/:roomId' element={<Room />} />
-      </Routes>
-    </RoomContextProvider>
+      <Route path='rooms/:roomId' element={<Room />} />
+    </Routes>
   )
 }
 
