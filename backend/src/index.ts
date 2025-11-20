@@ -8,6 +8,7 @@ import { onlineRooms } from './controllers/RoomController'
 
 import { setupRoomEvents } from './handlers/roomHandler'
 import { setupStoryEvents } from './handlers/storyHandler'
+import { setupUserEvents } from './handlers/userHandler'
 
 const app = express()
 
@@ -27,6 +28,10 @@ app.get('/', (req, res) => {
   res.status(200).json({
     message: 'OK',
   })
+})
+
+app.get('/rooms', (req, res) => {
+  res.status(200).json(onlineRooms)
 })
 
 app.get('/rooms/:id', (req, res) => {
@@ -50,6 +55,7 @@ io.on('connection', (socket) => {
 
   setupRoomEvents(io, socket)
   setupStoryEvents(io, socket)
+  setupUserEvents(io, socket)
 })
 
 httpServer.listen(process.env.PORT, () => {

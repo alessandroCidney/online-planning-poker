@@ -7,12 +7,16 @@ export interface RoomState {
   socketId?: string
 
   currentRoom?: Room
+
+  showAvatarSelector: boolean
 }
 
 const initialState: RoomState = {
   socketId: undefined,
 
   currentRoom: undefined,
+
+  showAvatarSelector: false,
 }
 
 export const roomSlice = createSlice({
@@ -29,6 +33,11 @@ export const roomSlice = createSlice({
       state.currentRoom = action.payload
     },
 
+    toggleAvatarSelector: (state) => {
+      state.showAvatarSelector = !state.showAvatarSelector
+    },
+
+    /* WebSocket Events */
     createRoom: (_state, _action: PayloadAction<{ userData: Partial<User> }>) => {},
     joinRoom: (_state, _action: PayloadAction<{ roomId: string, userData: Partial<User> }>) => {},
     leaveRoom: (_state) => {},
@@ -40,12 +49,15 @@ export const roomSlice = createSlice({
     saveVote: (_state, _action: PayloadAction<{ storyId: string, voteValue: number }>) => {},
     concludeVoting: (_state, _action: PayloadAction<{ storyId: string }>) => {},
     restartVoting: (_state, _action: PayloadAction<{ storyId: string }>) => {},
+
+    updateAvatar: (_state, _action: PayloadAction<{ avatar: User['avatar'] }>) => {},
   },
 })
 
 export const {
   setSocketId,
   setCurrentRoom,
+  toggleAvatarSelector,
 
   createRoom,
   joinRoom,
@@ -58,6 +70,8 @@ export const {
   saveVote,
   concludeVoting,
   restartVoting,
+
+  updateAvatar,
 } = roomSlice.actions
 
 export default roomSlice.reducer

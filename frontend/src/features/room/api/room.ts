@@ -35,8 +35,6 @@ export function setupRoomHandlers(
     })
 
     socket.on('room:updated', updateRoom)
-
-    // navigate(`/rooms/${response.data._id}`)
   }
 
   async function joinRoom(roomId: string, userData: Partial<User>) {
@@ -47,20 +45,12 @@ export function setupRoomHandlers(
       userData,
     })
 
-    // if (response.error) {
-    //   window.alert('Não foi possível se conectar à sala.')
-
-    //   navigate('/')
-    // }
-
     store.dispatch({
       type: 'room/setCurrentRoom',
       payload: response.data,
     })
 
     socket.on('room:updated', updateRoom)
-
-    // navigate(`/rooms/${response.data._id}`)
   }
 
   function updateRoom(updatedRoom: Room) {
@@ -86,8 +76,6 @@ export function setupRoomHandlers(
       type: 'room/setCurrentRoom',
       payload: undefined,
     })
-
-    // window.location.href = window.location.origin
   }
 
   switch (action.type) {

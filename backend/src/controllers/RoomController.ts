@@ -23,7 +23,7 @@ export class RoomController {
 
     onlineRooms[room._id] = room
 
-    this.joinRoom({ roomId: room._id, userData: { name: params.userData.name } })
+    this.joinRoom({ roomId: room._id, userData: { name: params.userData.name, avatar: params.userData.avatar } })
 
     return room
   }
@@ -33,7 +33,7 @@ export class RoomController {
       throw new AppError('Cannot found room', 404)
     }
 
-    const user = new User(params.userData.name, this.socket.id)
+    const user = new User(params.userData.name, this.socket.id, params.userData.avatar)
 
     this.socket.join(params.roomId)
 

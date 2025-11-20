@@ -8,6 +8,7 @@ import type { SocketResponse } from '@/types/socket'
 
 import { setupRoomHandlers } from './room'
 import { setupStoryHandlers } from './story'
+import { setupUserHandlers } from './user'
 
 /*
   The Redux documentation recommends disabling the ESLint rule.
@@ -71,15 +72,14 @@ export const setupSocketMiddleware: Middleware<{}, RootState> = (store) => {
 
 
   return next => (action) => {
-    console.log('MIDDLEWARE LOG - action:', action)
-
     // It was not possible to configure the type directly in the parameter.
     const typedAction = action as PayloadAction<unknown>
 
     const roomHandlerResult = setupRoomHandlers(store, typedAction, makeSureIsConnected, emitMessage)
     const storyHandlerResult = setupStoryHandlers(store, typedAction, makeSureRoomIsLoaded, emitMessage)
+    const userHandlerResult = setupUserHandlers(store, typedAction, makeSureRoomIsLoaded, emitMessage)
 
-    const resultArr = [roomHandlerResult, storyHandlerResult]
+    const resultArr = [roomHandlerResult, storyHandlerResult, userHandlerResult]
 
     if (resultArr.some(resultData => !resultData.stopAction)) {
       next(action)

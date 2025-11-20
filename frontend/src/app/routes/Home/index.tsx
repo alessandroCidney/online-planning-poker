@@ -41,12 +41,22 @@ export function Home() {
         roomId: enterRoomPayload.code,
         userData: {
           name: enterRoomPayload.name,
+
+          avatar: {
+            type: 'internal_photo',
+            path: 'dog-warrior',
+          },
         },
       }))
     } else {
       dispatch(createRoom({
         userData: {
           name: enterRoomPayload.name,
+
+          avatar: {
+            type: 'internal_photo',
+            path: 'dog-warrior',
+          },
         },
       }))
     }

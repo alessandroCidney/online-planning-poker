@@ -4,6 +4,7 @@ import { DefaultButton } from '@/components/commons/DefaultButton'
 
 import * as roomSlice from '@/features/room/roomSlice'
 import * as sidebarSlice from '@/features/sidebar/sidebarSlice'
+import { AvatarSelector } from '@/features/room/components/AvatarSelector'
 
 import { useRedux } from '@/hooks/useRedux'
 
@@ -34,6 +35,8 @@ export function RoomHeader() {
             >
               Sair
             </DefaultButton>
+
+            <AvatarSelector />
 
             <DefaultButton
               color={sidebarSelector.open ? 'var(--theme-primary-lighten-3-color)' : '#e8e8e8'}
