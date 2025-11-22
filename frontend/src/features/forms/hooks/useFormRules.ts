@@ -7,7 +7,11 @@ export const allFormRules = {
   }),
   maxLength: (max: number) => (str: string) => ({
     valid: str.length <= max,
-    message: str ? undefined : `No máximo ${max} caracteres.`,
+    message: str.length <= max ? undefined : `No máximo ${max} caracteres.`,
+  }),
+  minLength: (min: number) => (str: string) => ({
+    valid: str.length >= min,
+    message: str.length >= min ? undefined : `No mínimo ${min} caracteres.`,
   }),
 }
 

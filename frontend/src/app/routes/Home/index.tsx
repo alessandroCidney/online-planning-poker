@@ -35,6 +35,7 @@ export function Home() {
     selectedRules: [
       allFormRules.requiredString,
       allFormRules.maxLength(36),
+      allFormRules.minLength(36),
     ],
   })
 

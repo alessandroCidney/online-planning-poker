@@ -13,7 +13,7 @@ export const StyledButton = styled(motion.button)<StyleButtonProps>`
   aspect-ratio: 2 / 3;
 
   font-family: Modak, system-ui, sans-serif;
-  font-size: 90px;
+  font-size: calc(${props => props.$width || '120px'} * 3 / 4);
   color: #fff;
 
   border: none;
