@@ -137,7 +137,7 @@ export function Room() {
   const cardsContainerClassName = useMemo(() => {
     const classNameArr = []
 
-    if (['disconnected', 'already_voted'].includes(votingStatus)) {
+    if (['disconnected'].includes(votingStatus)) {
       classNameArr.push('cards-container--disabled')
     }
 

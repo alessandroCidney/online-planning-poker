@@ -106,6 +106,7 @@ export function AvatarSelector() {
               exit={{
                 opacity: 0,
               }}
+              onClick={() => dispatch(roomSlice.toggleAvatarSelector())}
             >
               <StyledCardsList>
                 {
@@ -121,14 +122,20 @@ export function AvatarSelector() {
                         className={imageData.selected ? 'card-image--selected' : ''}
                         $width={cardImageDimensions.width}
                         $imageUrl={imageData.imagePath}
-                        onClick={() => setIndex(imageData.originalIndex)}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setIndex(imageData.originalIndex)
+                        }}
                       />
 
                       {
                         imageData.selected && (
                           <DefaultButton
                             block
-                            onClick={() => selectAvatar(imageData.imageId)}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              selectAvatar(imageData.imageId)
+                            }}
                           >
                             Selecionar avatar
                           </DefaultButton>
@@ -144,7 +151,10 @@ export function AvatarSelector() {
                   color='transparent'
                   hoverColor='rgb(255, 255, 255, .1)'
                   icon
-                  onClick={decrementIndex}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    decrementIndex()
+                  }}
                 >
                   <BsArrowLeft size={25} />
                 </DefaultButton>
@@ -153,7 +163,10 @@ export function AvatarSelector() {
                   color='transparent'
                   hoverColor='rgb(255, 255, 255, .1)'
                   icon
-                  onClick={incrementIndex}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    incrementIndex()
+                  }}
                 >
                   <BsArrowRight size={25} />
                 </DefaultButton>
@@ -163,7 +176,10 @@ export function AvatarSelector() {
                 color='transparent'
                 hoverColor='rgb(255, 255, 255, .1)'
                 icon
-                onClick={() => dispatch(roomSlice.toggleAvatarSelector())}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  dispatch(roomSlice.toggleAvatarSelector())
+                }}
               >
                 <BsX size={25} />
               </StyledCloseButton>
