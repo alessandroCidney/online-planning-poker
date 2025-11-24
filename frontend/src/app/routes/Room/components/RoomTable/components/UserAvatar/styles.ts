@@ -6,27 +6,6 @@ interface StyledCircleProps {
   $backgroundImage: string
 }
 
-export const StyledUserContainer = styled(motion.div)<StyledCircleProps>`
-  position: absolute;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 50px;
-  height: 50px;
-
-  border-radius: 50%;
-
-  background-image: ${props => `url('${props.$backgroundImage}')`};
-  background-size: 100%;
-  background-position: center 67px;
-
-  &.user-avatar--disabled {
-    filter: saturate(0);
-  }
-`
-
 export const StyledUserName = styled.div`
   position: absolute;
 
@@ -41,11 +20,44 @@ export const StyledUserName = styled.div`
 
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #767676;
   font-size: 12px;
   text-align: center;
+  color: #767676;
   
   background-color: #f6f6f6;
 
   border-radius: 8px;
+`
+
+export const StyledUserContainer = styled(motion.div)<StyledCircleProps>`
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+
+  border-radius: 50%;
+  border: 2px solid white;
+  outline: 2px solid black;
+
+  background-image: ${props => `url('${props.$backgroundImage}')`};
+  background-size: 100%;
+  background-position: center 67px;
+
+  &.user-avatar--disabled {
+    filter: saturate(0);
+  }
+
+  &.user-avatar--owner {
+    outline: 2px solid var(--theme-primary-darken-2-color);
+
+    ${StyledUserName} {
+      color: #fff;
+
+      background-color: var(--theme-primary-darken-1-color);
+    }
+  }
 `

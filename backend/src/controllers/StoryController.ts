@@ -7,8 +7,28 @@ import { Story } from '../models/Story'
 import { AppError } from '../helpers/error'
 
 function someVotingIsStarted(roomId: string) {
-  return Object.values(onlineRooms[roomId].stories)
+  const startedVotingExists = Object.values(onlineRooms[roomId].stories)
     .some(storyData => storyData.votingStatus === 'in_progress')
+
+  if (startedVotingExists) {
+    throw new AppError({
+      message: 'Já existe uma votação!',
+      details: 'Finalize a votação atual antes de iniciar próximas votações.',
+      status: 400,
+    })
+  }
+}
+
+function allowOnlyOwner(roomId: string, userId: string) {
+  const userIsOwner = onlineRooms[roomId].ownerIds.includes(userId)
+
+  if (!userIsOwner) {
+    throw new AppError({
+      message: 'Sem autorização!',
+      details: 'Somente os donos da sala podem realizar esta ação.',
+      status: 403,
+    })
+  }
 }
 
 export class StoryController {
@@ -21,6 +41,8 @@ export class StoryController {
   }
 
   createStory(params: { roomId: string, title: string }) {
+    allowOnlyOwner(params.roomId, this.socket.id)
+
     const story = new Story(params.title)
 
     onlineRooms[params.roomId].stories[story._id] = story
@@ -31,19 +53,16 @@ export class StoryController {
   }
 
   removeStory(params: { roomId: string, storyId: string }) {
+    allowOnlyOwner(params.roomId, this.socket.id)
+
     delete onlineRooms[params.roomId].stories[params.storyId]
 
     this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
   }
 
   startVoting(params: { roomId: string, storyId: string }) {
-    if (someVotingIsStarted(params.roomId)) {
-      throw new AppError({
-        message: 'Já existe uma votação!',
-        details: 'Finalize a votação atual antes de iniciar próximas votações.',
-        status: 400,
-      })
-    }
+    allowOnlyOwner(params.roomId, this.socket.id)
+    someVotingIsStarted(params.roomId)
 
     onlineRooms[params.roomId].stories[params.storyId].votingStatus = 'in_progress'
 
@@ -63,6 +82,8 @@ export class StoryController {
   }
 
   concludeVoting(params: { roomId: string, storyId: string }) {
+    allowOnlyOwner(params.roomId, this.socket.id)
+
     onlineRooms[params.roomId].stories[params.storyId].votingStatus = 'concluded'
 
     this.io.to(params.roomId).emit('room:updated', onlineRooms[params.roomId])
@@ -73,13 +94,8 @@ export class StoryController {
   }
 
   restartVoting(params: { roomId: string, storyId: string }) {
-    if (someVotingIsStarted(params.roomId)) {
-      throw new AppError({
-        message: 'Já existe uma votação!',
-        details: 'Finalize a votação atual antes de iniciar próximas votações.',
-        status: 400,
-      })
-    }
+    allowOnlyOwner(params.roomId, this.socket.id)
+    someVotingIsStarted(params.roomId)
 
     onlineRooms[params.roomId].stories[params.storyId].votes = {}
     onlineRooms[params.roomId].stories[params.storyId].votingStatus = 'in_progress'

@@ -18,6 +18,10 @@ export function RoomSidebar() {
 
   const roomSelector = useAppSelector(state => state.room)
 
+  const isRoomOwner = !!roomSelector.currentRoom
+    && !!roomSelector.socketId
+    && roomSelector.currentRoom.ownerIds.includes(roomSelector.socketId)
+
   const [showForm, setShowForm] = useState(false)
 
   function createStory(title: string) {
@@ -66,7 +70,7 @@ export function RoomSidebar() {
     <StyledContentContainer>
       <StyledContentActions>
         <DefaultButton
-          disabled={showForm}
+          disabled={showForm || !isRoomOwner}
           block
           onClick={() => setShowForm(true)}
         >

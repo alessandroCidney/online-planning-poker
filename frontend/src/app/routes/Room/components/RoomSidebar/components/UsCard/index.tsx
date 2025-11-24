@@ -3,6 +3,8 @@ import { useMemo, type ReactNode } from 'react'
 import { BsFillTrash3Fill, BsArrowCounterclockwise } from 'react-icons/bs'
 import type { HTMLMotionProps } from 'motion/react'
 
+import { useAppSelector } from '@/app/storeHooks'
+
 import { DefaultButton } from '@/components/commons/DefaultButton'
 
 import { useVoting } from '@/features/room/hooks/useVoting'
@@ -36,6 +38,18 @@ export function UsCard({
 
   ...rest
 }: UsCardProps) {
+  const roomSelector = useAppSelector(state => state.room)
+
+  const isRoomOwner = !!roomSelector.currentRoom
+    && !!roomSelector.socketId
+    && roomSelector.currentRoom.ownerIds.includes(roomSelector.socketId)
+
+  const { getVotingResult, votingStory } = useVoting()
+
+  const votingResult = useMemo(() => getVotingResult(storyData), [getVotingResult, storyData])
+
+  const anotherStoryIsInVoting = votingStory && votingStory._id !== storyData._id
+
   const customClassName = useMemo(() => {
     const classNameArr = []
     
@@ -48,10 +62,6 @@ export function UsCard({
 
     return classNameArr.join(' ')
   }, [className, storyData.votingStatus])
-
-  const { getVotingResult, votingStory } = useVoting()
-
-  const votingResult = useMemo(() => getVotingResult(storyData), [getVotingResult, storyData])
 
   interface AnimatedContainerProps {
     children: ReactNode
@@ -81,7 +91,7 @@ export function UsCard({
 
         <StyledCardActions>
           <DefaultButton
-            disabled={votingStory && votingStory._id !== storyData._id}
+            disabled={anotherStoryIsInVoting || !isRoomOwner}
             color='var(--theme-primary-lighten-2-color)'
             onClick={() => startVoting(storyData._id)}
           >
@@ -89,6 +99,7 @@ export function UsCard({
           </DefaultButton>
 
           <DefaultButton
+            disabled={!isRoomOwner}
             color='var(--theme-primary-lighten-2-color)'
             icon
             onClick={() => removeStory(storyData._id)}
@@ -111,6 +122,7 @@ export function UsCard({
 
         <StyledCardActions>
           <DefaultButton
+            disabled={!isRoomOwner}
             color='var(--theme-primary-lighten-2-color)'
             onClick={() => concludeVoting(storyData._id)}
           >
@@ -144,7 +156,7 @@ export function UsCard({
 
         <StyledCardRightActions>
           <DefaultButton
-            disabled={votingStory && votingStory._id !== storyData._id}
+            disabled={anotherStoryIsInVoting || !isRoomOwner}
             color='var(--theme-primary-lighten-2-color)'
             icon
             onClick={() => restartVoting(storyData._id)}
@@ -153,6 +165,7 @@ export function UsCard({
           </DefaultButton>
 
           <DefaultButton
+            disabled={!isRoomOwner}
             color='var(--theme-primary-lighten-2-color)'
             icon
             onClick={() => removeStory(storyData._id)}

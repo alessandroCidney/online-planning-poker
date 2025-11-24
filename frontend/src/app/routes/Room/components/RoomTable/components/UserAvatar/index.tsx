@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+
+import { useAppSelector } from '@/app/storeHooks'
 
 import type { EllipseCoordinate } from '@/utils/calc'
 
@@ -14,7 +16,23 @@ interface UserAvatarProps {
 }
 
 export function UserAvatar({ user, coordinates, disabled }: UserAvatarProps) {
+  const roomSelector = useAppSelector(state => state.room)
+
   const [loadedPhoto, setLoadedPhoto] = useState('')
+
+  const className = useMemo(() => {
+    const classNameArr = []
+    
+    if (disabled) {
+      classNameArr.push('user-avatar--disabled')
+    }
+
+    if (roomSelector.currentRoom?.ownerIds.includes(user._id)) {
+      classNameArr.push('user-avatar--owner')
+    }
+
+    return classNameArr.join(' ')
+  }, [disabled, roomSelector.currentRoom?.ownerIds, user._id])
 
   useEffect(() => {
     async function loadPhoto() {
@@ -29,7 +47,7 @@ export function UserAvatar({ user, coordinates, disabled }: UserAvatarProps) {
   return (
     <StyledUserContainer
       $backgroundImage={loadedPhoto}
-      className={disabled ? 'user-avatar--disabled' : ''}
+      className={className}
       initial={{
         translateX: coordinates.x,
         translateY: coordinates.y * -1,
