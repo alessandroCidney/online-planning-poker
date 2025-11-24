@@ -17,6 +17,7 @@ export const StyledFigure = styled(motion.figure)<StyledFigureProps>`
   right: 20px;
 
   min-width: 450px;
+  max-width: 600px;
   height: 100px;
 
   padding: 0 20px;
@@ -35,6 +36,17 @@ export const StyledFigure = styled(motion.figure)<StyledFigureProps>`
 
 export const StyledContentContainer = styled.div`
   margin-right: 20px;
+
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    max-width: 100%;
+  }
 `
 
 export const FloatingActions = styled.div`

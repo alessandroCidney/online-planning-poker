@@ -1,5 +1,7 @@
 import { useMemo, type ReactNode } from 'react'
-import { BsFillTrash3Fill, BsCircleFill, BsArrowCounterclockwise } from 'react-icons/bs'
+
+import { BsFillTrash3Fill, BsArrowCounterclockwise } from 'react-icons/bs'
+import type { HTMLMotionProps } from 'motion/react'
 
 import { DefaultButton } from '@/components/commons/DefaultButton'
 
@@ -7,8 +9,7 @@ import { useVoting } from '@/features/room/hooks/useVoting'
 
 import type { Story } from '@/types/stories'
 
-import { FloatingActions, StyledCardActions, StyledCardContainer, StyledHeader, StyledVotingResultContainer, StyledVotingResult, StyledWarning } from './styles'
-import type { HTMLMotionProps } from 'motion/react'
+import { StyledCardActions, StyledCardContainer, StyledHeader, StyledVotingResultContainer, StyledVotingResult, StyledCardRightActions } from './styles'
 
 interface UsCardProps extends HTMLMotionProps<'article'> {
   storyData: Story
@@ -48,7 +49,7 @@ export function UsCard({
     return classNameArr.join(' ')
   }, [className, storyData.votingStatus])
 
-  const { getVotingResult } = useVoting()
+  const { getVotingResult, votingStory } = useVoting()
 
   const votingResult = useMemo(() => getVotingResult(storyData), [getVotingResult, storyData])
 
@@ -73,11 +74,14 @@ export function UsCard({
     return (
       <AnimatedContainer>
         <StyledHeader>
-          { storyData.title }
+          <h3>
+            { storyData.title }
+          </h3>
         </StyledHeader>
 
         <StyledCardActions>
           <DefaultButton
+            disabled={votingStory && votingStory._id !== storyData._id}
             color='var(--theme-primary-lighten-2-color)'
             onClick={() => startVoting(storyData._id)}
           >
@@ -100,16 +104,10 @@ export function UsCard({
     return (
       <AnimatedContainer>
         <StyledHeader>
-          { storyData.title }
+          <h3>
+            { storyData.title }
+          </h3>
         </StyledHeader>
-
-        <StyledWarning>
-          <BsCircleFill size={15} />
-
-          <span>
-            Em votação
-          </span>
-        </StyledWarning>
 
         <StyledCardActions>
           <DefaultButton
@@ -126,7 +124,9 @@ export function UsCard({
   return (
     <AnimatedContainer>
       <StyledHeader>
-        { storyData.title }
+        <h3>
+          { storyData.title }
+        </h3>
       </StyledHeader>
 
       <StyledCardActions>
@@ -142,23 +142,24 @@ export function UsCard({
           }
         </StyledVotingResultContainer>
 
-        <DefaultButton
-          color='var(--theme-primary-lighten-2-color)'
-          icon
-          onClick={() => removeStory(storyData._id)}
-        >
-          <BsFillTrash3Fill />
-        </DefaultButton>
-
-        <FloatingActions>
+        <StyledCardRightActions>
           <DefaultButton
+            disabled={votingStory && votingStory._id !== storyData._id}
             color='var(--theme-primary-lighten-2-color)'
             icon
             onClick={() => restartVoting(storyData._id)}
           >
             <BsArrowCounterclockwise size={25} />
           </DefaultButton>
-        </FloatingActions>
+
+          <DefaultButton
+            color='var(--theme-primary-lighten-2-color)'
+            icon
+            onClick={() => removeStory(storyData._id)}
+          >
+            <BsFillTrash3Fill />
+          </DefaultButton>
+        </StyledCardRightActions>
       </StyledCardActions>
     </AnimatedContainer>
   )

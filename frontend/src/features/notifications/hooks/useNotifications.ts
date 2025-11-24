@@ -19,7 +19,7 @@ export async function showMessageWithDelay(
 ) {
   if (getStoreNotificationsData().active) {
     await waitFor(() => !getStoreNotificationsData().active)
-    await wait(500)
+    await wait(100)
   }
 
   const customMessageId = uuidV4()

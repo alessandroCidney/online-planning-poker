@@ -32,10 +32,15 @@ export const StyledUserName = styled.div`
 
   top: -25px;
   
-  min-width: 100%;
-
   padding: 0 10px;
 
+  min-width: 100%;
+  max-width: 200px;
+  
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #767676;
   font-size: 12px;
   text-align: center;

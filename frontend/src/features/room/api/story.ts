@@ -161,7 +161,7 @@ export function setupStoryListeners(
       store.dispatch,
       {
         title: 'Nova votação iniciada!',
-        description: `Aguardando votos para a tarefa ${storyData.title}.`,
+        description: `Aguardando votos para a tarefa "${storyData.title}".`,
         type: 'info',
       },
     )
@@ -173,7 +173,7 @@ export function setupStoryListeners(
       store.dispatch,
       {
         title: 'Votação reiniciada!',
-        description: `Aguardando votos para a tarefa ${storyData.title}.`,
+        description: `Aguardando votos para a tarefa "${storyData.title}".`,
         type: 'info',
       },
     )

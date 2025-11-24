@@ -33,7 +33,19 @@ export const StyledCardContainer = styled(motion.article)<StyledCardContainerPro
 export const StyledHeader = styled.header`
   padding: 20px;
 
-  font-size: 1.2rem;
+  width: 100%;
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 400;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `
 
 export const StyledCardActions = styled.div`
@@ -46,6 +58,13 @@ export const StyledCardActions = styled.div`
   justify-content: space-between;
   
   padding: 10px;
+`
+
+export const StyledCardRightActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 `
 
 export const StyledWarning = styled.div`
@@ -94,10 +113,4 @@ export const StyledVotingResult = styled.div`
   background-color: #fff;
 
   border-radius: 50%;
-`
-
-export const FloatingActions = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
 `

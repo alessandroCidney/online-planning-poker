@@ -15,7 +15,9 @@ export const StyledHeader = styled.header`
   background-color: #f9f9f9;
 
   > h1 {
-    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   > div {
