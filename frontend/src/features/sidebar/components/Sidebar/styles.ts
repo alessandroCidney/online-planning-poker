@@ -13,6 +13,7 @@ export const StyledAside = styled(motion.aside)`
   right: 0;
 
   width: 500px;
+  max-width: 100%;
   height: 100%;
 
   padding-top: 30px;

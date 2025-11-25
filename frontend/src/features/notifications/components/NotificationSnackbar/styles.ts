@@ -28,11 +28,20 @@ export const StyledFigure = styled(motion.figure)<StyledFigureProps>`
 
   background-color: ${props => props.$backgroundColor || 'var(--theme-primary-color)'};
 
+  outline: 2px solid #fff;
   border-radius: 20px;
 
   figcaption {
     font-size: 1.2rem;
     font-weight: 600;
+  }
+
+  @media (max-width: 960px) {
+    bottom: 10px;
+    right: 10px;
+
+    min-width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
   }
 `
 

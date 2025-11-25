@@ -3,8 +3,6 @@ import styled from 'styled-components'
 import { motion } from 'motion/react'
 
 export const StyledContainer = styled.div`
-  z-index: var(--base-menu-z-index);
-
   position: relative;
 `
 
@@ -20,7 +18,9 @@ interface StyledMenuContentProps {
   $width: string
 }
 
-export const StyledMenuContent = styled(motion.div)<StyledMenuContentProps>`  
+export const StyledMenuContent = styled(motion.div)<StyledMenuContentProps>`
+  z-index: var(--base-menu-z-index);
+
   position: absolute;
 
   padding: 10px;

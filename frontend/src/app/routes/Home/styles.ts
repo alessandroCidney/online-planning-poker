@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Form = styled.form`
   width: 500px;
+  max-width: calc(100% - 20px);
 
   padding: 30px;
 
