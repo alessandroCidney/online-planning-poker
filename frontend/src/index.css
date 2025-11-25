@@ -23,6 +23,10 @@
   --theme-error-color: #EA3546;
   --theme-error-darken-1-color: #E82135;
   --theme-error-darken-2-color: #DE172B;
+
+  --base-overlay-z-index: 9999;
+  --base-menu-z-index: 9899;
+  --base-sidebar-z-index: 9799;
 }
 
 *::-webkit-scrollbar {

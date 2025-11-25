@@ -11,6 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
   block?: boolean
   icon?: boolean
+  list?: boolean
   disabled?: boolean
   readonly?: boolean
 
@@ -32,6 +33,7 @@ export function DefaultButton({
 
   block,
   icon,
+  list,
   disabled,
   readonly,
   
@@ -51,6 +53,10 @@ export function DefaultButton({
         customClassesArr.push('default-button--icon')
       }
 
+      if (list) {
+        customClassesArr.push('default-button--list')
+      }
+
       if (prependIcon) {
         customClassesArr.push('default-button--text-and-icon')
       }
@@ -65,7 +71,7 @@ export function DefaultButton({
 
       return `${customClassesArr.join(' ')} ${className}`
     },
-    [block, icon, prependIcon, disabled, readonly, className],
+    [block, icon, list, prependIcon, disabled, readonly, className],
   )
   
   return (

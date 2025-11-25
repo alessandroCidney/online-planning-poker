@@ -10,11 +10,9 @@ import { DefaultButton } from '@/components/commons/DefaultButton'
 
 import { useElementDimensions } from '@/hooks/useElementDimensions'
 
-import { UserAvatar } from '../UserAvatar'
-
 import { useAvatars } from '../../hooks/useAvatars'
 
-import { StyledAvatarButton, StyledCardContainer, StyledCornerActions, StyledCardImage, StyledCardsList } from './style'
+import { StyledCardContainer, StyledCornerActions, StyledCardImage, StyledCardsList } from './style'
 import { Overlay } from '@/components/commons/Overlay'
 
 export function AvatarSelector() {
@@ -86,81 +84,73 @@ export function AvatarSelector() {
   }
 
   return (
-    <div>
-      <StyledAvatarButton
-        onClick={() => dispatch(roomSlice.toggleAvatarSelector())}
-      >
-        <UserAvatar />
-      </StyledAvatarButton>
-
-      <Overlay
-        active={showAvatarSelector}
-        closeOverlay={() => dispatch(roomSlice.toggleAvatarSelector())}
-      >
-        <StyledCardsList>
-          {
-            positionedImages.map((imageData) => (
-              <StyledCardContainer
-                key={imageData.imagePath}
+    <Overlay
+      active={showAvatarSelector}
+      closeOverlay={() => dispatch(roomSlice.toggleAvatarSelector())}
+    >
+      <StyledCardsList>
+        {
+          positionedImages.map((imageData) => (
+            <StyledCardContainer
+              key={imageData.imagePath}
+              $width={cardImageDimensions.width}
+              animate={{ x: imageData.translateX, scale: imageData.selected ? 1.3 : 1 }}
+              whileHover={{ scale: imageData.selected ? 1.3 : 1.1 }}
+              layout
+            >
+              <StyledCardImage
+                className={imageData.selected ? 'card-image--selected' : ''}
                 $width={cardImageDimensions.width}
-                animate={{ x: imageData.translateX, scale: imageData.selected ? 1.3 : 1 }}
-                whileHover={{ scale: imageData.selected ? 1.3 : 1.1 }}
-                layout
-              >
-                <StyledCardImage
-                  className={imageData.selected ? 'card-image--selected' : ''}
-                  $width={cardImageDimensions.width}
-                  $imageUrl={imageData.imagePath}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setIndex(imageData.originalIndex)
-                  }}
-                />
+                $imageUrl={imageData.imagePath}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIndex(imageData.originalIndex)
+                }}
+              />
 
-                {
-                  imageData.selected && (
-                    <DefaultButton
-                      block
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        selectAvatar(imageData.imageId)
-                      }}
-                    >
-                      Selecionar avatar
-                    </DefaultButton>
-                  )
-                }
-              </StyledCardContainer>
-            ))
-          }
-        </StyledCardsList>
+              {
+                imageData.selected && (
+                  <DefaultButton
+                    block
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      selectAvatar(imageData.imageId)
+                    }}
+                  >
+                    Selecionar avatar
+                  </DefaultButton>
+                )
+              }
+            </StyledCardContainer>
+          ))
+        }
+      </StyledCardsList>
 
-        <StyledCornerActions>
-          <DefaultButton
-            color='transparent'
-            hoverColor='rgb(255, 255, 255, .1)'
-            icon
-            onClick={(e) => {
-              e.stopPropagation()
-              decrementIndex()
-            }}
-          >
-            <BsArrowLeft size={25} />
-          </DefaultButton>
+      <StyledCornerActions>
+        <DefaultButton
+          color='transparent'
+          hoverColor='rgb(255, 255, 255, .1)'
+          icon
+          onClick={(e) => {
+            e.stopPropagation()
+            decrementIndex()
+          }}
+        >
+          <BsArrowLeft size={25} />
+        </DefaultButton>
 
-          <DefaultButton
-            color='transparent'
-            hoverColor='rgb(255, 255, 255, .1)'
-            icon
-            onClick={(e) => {
-              e.stopPropagation()
-              incrementIndex()
-            }}
-          >
-            <BsArrowRight size={25} />
-          </DefaultButton>
-        </StyledCornerActions>
-      </Overlay>
-    </div>
+        <DefaultButton
+          color='transparent'
+          hoverColor='rgb(255, 255, 255, .1)'
+          icon
+          onClick={(e) => {
+            e.stopPropagation()
+            incrementIndex()
+          }}
+        >
+          <BsArrowRight size={25} />
+        </DefaultButton>
+      </StyledCornerActions>
+    </Overlay>
   )
 }

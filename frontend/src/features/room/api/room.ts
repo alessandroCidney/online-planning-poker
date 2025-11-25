@@ -5,13 +5,10 @@ import type { Middleware, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/app/store'
 
 import * as roomSlice from '@/features/room/roomSlice'
-import { showMessageWithDelay } from '@/features/notifications/hooks/useNotifications'
 
 import type { User } from '@/types/users'
 import type { Room } from '@/types/rooms'
 import type { SocketResponse } from '@/types/socket'
-
-import { AppError } from '@/utils/error'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type MiddlewareType = Middleware<{}, RootState>
@@ -37,6 +34,12 @@ export function setupRoomHandlers(
       type: 'room/setCurrentRoom',
       payload: response.data,
     })
+
+    if (socket.id && response.data.ownerIds.includes(socket.id)) {
+      store.dispatch({
+        type: 'sidebar/openSidebar',
+      })
+    }
 
     socket.on('room:updated', updateRoom)
   }

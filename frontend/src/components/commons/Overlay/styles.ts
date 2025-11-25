@@ -5,7 +5,7 @@ import { motion } from 'motion/react'
 import { DefaultButton } from '../DefaultButton'
 
 export const StyledOverlay = styled(motion.div)`
-  z-index: 10;
+  z-index: var(--base-overlay-z-index);
 
   display: flex;
   align-items: center;

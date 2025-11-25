@@ -7,6 +7,8 @@ interface StyledFigureProps {
 }
 
 export const StyledFigure = styled(motion.figure)<StyledFigureProps>`
+  z-index: var(--base-menu-z-index);
+
   display: flex;
   align-items: center;
   justify-content: flex-start;

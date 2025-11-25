@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 import { AnimatePresence } from 'motion/react'
 import { BsX } from 'react-icons/bs'
@@ -14,11 +14,27 @@ interface OverlayProps {
 }
 
 export function Overlay({ active, children, closeOverlay }: OverlayProps) {
+  const [focused, setFocused] = useState(false)
+
+  const overlayRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (active && !focused) {
+      overlayRef.current?.focus()
+      setFocused(true)
+    }
+
+    if (!active) {
+      setFocused(false)
+    }
+  }, [active, focused])
+
   return (
     <AnimatePresence>
       {
         active && (
           <StyledOverlay
+            ref={overlayRef}
             initial={{
               opacity: 0,
             }}
@@ -27,6 +43,10 @@ export function Overlay({ active, children, closeOverlay }: OverlayProps) {
             }}
             exit={{
               opacity: 0,
+            }}
+            tabIndex={0}
+            onFocus={() => {
+              console.log('focused')
             }}
             onClick={closeOverlay}
           >

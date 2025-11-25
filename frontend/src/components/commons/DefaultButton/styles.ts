@@ -53,6 +53,11 @@ export const StyledButton = styled.button<ButtonProps>`
     border-radius: 50%;
   }
 
+  &.default-button--list {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
   &.default-button--text-and-icon {
     > * {
       margin-right: 5px;

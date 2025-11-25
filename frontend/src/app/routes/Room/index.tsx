@@ -21,6 +21,7 @@ import { RoomTable } from './components/RoomTable'
 import { PokerCard } from './components/PokerCard'
 
 import { StyledCardOverlayActions, StyledCardOverlayContent, StyledCardsContainer, StyledPokerCard } from './styles'
+import { AvatarSelector } from '@/features/room/components/AvatarSelector'
 
 export function Room() {
   const navigate = useNavigate()
@@ -220,6 +221,8 @@ export function Room() {
       <RoomCodeCopyButton />
 
       <FloatingVotingChip />
+
+      <AvatarSelector />
 
       <Overlay
         active={showVoteConfirmation}

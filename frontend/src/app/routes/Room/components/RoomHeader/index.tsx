@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from '@/app/storeHooks'
 
 import { DefaultButton } from '@/components/commons/DefaultButton'
 
-import * as roomSlice from '@/features/room/roomSlice'
 import * as sidebarSlice from '@/features/sidebar/sidebarSlice'
-import { AvatarSelector } from '@/features/room/components/AvatarSelector'
 
 import { useElementDimensions } from '@/hooks/useElementDimensions'
+
+import { UserMenu } from './components/UserMenu'
 
 import { StyledHeader } from './styles'
 
@@ -46,16 +46,9 @@ export function RoomHeader() {
       {
         !!roomSelector.currentRoom && (
           <div>
-            <DefaultButton
-              minWidth='150px'
-              color='#d9d9d9'
-              hoverColor='#ccc'
-              onClick={() => dispatch(roomSlice.leaveRoom())}
-            >
-              Sair
-            </DefaultButton>
+            {/* <AvatarSelector /> */}
 
-            <AvatarSelector />
+            <UserMenu />
 
             <DefaultButton
               color={sidebarSelector.open ? 'var(--theme-primary-lighten-3-color)' : '#e8e8e8'}
