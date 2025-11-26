@@ -2,9 +2,7 @@ import styled from 'styled-components'
 
 import { motion } from 'motion/react'
 
-interface StyledCircleProps {
-  $backgroundImage: string
-}
+import { UserAvatar } from '@/features/room/components/UserAvatar'
 
 export const StyledUserName = styled.div`
   position: absolute;
@@ -29,35 +27,24 @@ export const StyledUserName = styled.div`
   border-radius: 8px;
 `
 
-export const StyledUserContainer = styled(motion.div)<StyledCircleProps>`
+export const StyledUserAvatar = styled(UserAvatar)``
+
+export const StyledContainer = styled(motion.div)`
   position: absolute;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 54px;
-  height: 54px;
-
-  border-radius: 50%;
-  border: 2px solid #fff;
-  outline: 2px solid #000;
-
-  background-image: ${props => `url('${props.$backgroundImage}')`};
-  background-size: 100%;
-  background-position: center 67px;
-
-  &.user-avatar--disabled {
-    filter: saturate(0);
-  }
-
-  &.user-avatar--owner {
-    outline: 2px solid var(--theme-primary-darken-2-color);
-
+  &.table-user-avatar__container--primary {
     ${StyledUserName} {
       color: #fff;
 
       background-color: var(--theme-primary-darken-1-color);
+    }
+
+    ${StyledUserAvatar} {
+      outline: 2px solid var(--theme-primary-darken-2-color);
     }
   }
 `

@@ -8,7 +8,7 @@ import { useElementDimensions } from '@/hooks/useElementDimensions'
 
 import { calculateEllipseEquidistantPointsCoordinates } from '@/utils/calc'
 
-import { UserAvatar } from './components/UserAvatar'
+import { TableUserAvatar } from './components/TableUserAvatar'
 import { StackOfCards } from './components/StackOfCards'
 
 import { StyledTable, StyledTableContainer } from './styles'
@@ -97,7 +97,7 @@ export function RoomTable() {
           {
             positionedUsers
               .map(positionedUser => (
-                <UserAvatar
+                <TableUserAvatar
                   key={positionedUser.user._id}
                   user={positionedUser.user}
                   coordinates={positionedUser.coordinates}
