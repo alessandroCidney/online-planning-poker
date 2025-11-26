@@ -56,6 +56,6 @@ io.on('connection', (socket) => {
   setupUserEvents(io, socket)
 })
 
-httpServer.listen(process.env.PORT, () => {
+httpServer.listen(process.env.PORT || 8080, () => {
   console.log(`Listening at port ${process.env.PORT}`)
 })
