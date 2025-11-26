@@ -56,7 +56,6 @@ export const roomSlice = createSlice({
     /* WebSocket Events */
     createRoom: (_state, _action: PayloadAction<{ userData: Partial<User> }>) => {},
     joinRoom: (_state, _action: PayloadAction<{ roomId: string, userData: Partial<User> }>) => {},
-    leaveRoom: (_state) => {},
 
     createStory: (_state, _action: PayloadAction<{ title: string }>) => {},
     removeStory: (_state, _action: PayloadAction<{ storyId: string }>) => {},
@@ -81,7 +80,6 @@ export const {
 
   createRoom,
   joinRoom,
-  leaveRoom,
 
   createStory,
   removeStory,

@@ -20,7 +20,6 @@ export function setupRoomHandlers(
   action: PayloadAction<unknown>,
   makeSureIsConnected: () => Promise<Socket>,
   emitMessage: <T>(type: string, payload: unknown) => Promise<SocketResponse<T>>,
-  clearSocket: () => void,
 ) {
 
   async function createRoom(userData: Partial<User>) {
@@ -67,26 +66,6 @@ export function setupRoomHandlers(
     })
   }
 
-  async function leaveRoom() {
-    const socket = await makeSureIsConnected()
-
-    socket.removeAllListeners()
-
-    socket.disconnect()
-
-    clearSocket()
-
-    store.dispatch({
-      type: 'room/setSocketId',
-      payload: undefined,
-    })
-
-    store.dispatch({
-      type: 'room/setCurrentRoom',
-      payload: undefined,
-    })
-  }
-
   switch (action.type) {
     case 'room/createRoom': {
       const actionPayload = action.payload as Parameters<typeof roomSlice['createRoom']>[0]
@@ -100,12 +79,6 @@ export function setupRoomHandlers(
       const actionPayload = action.payload as Parameters<typeof roomSlice['joinRoom']>[0]
   
       joinRoom(actionPayload.roomId, actionPayload.userData)
-  
-      return { stopAction: true }
-    }
-  
-    case 'room/leaveRoom': {
-      leaveRoom()
   
       return { stopAction: true }
     }
