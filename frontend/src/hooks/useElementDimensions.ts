@@ -2,7 +2,11 @@ import React, { useLayoutEffect, useState } from 'react'
 
 // Get dimensions based on ref or window
 export function useElementDimensions(ref?: React.RefObject<HTMLElement | null>) {
-  const [dimensions, setDimensions] = useState<{ width: number, height: number }>()
+  const [dimensions, setDimensions] = useState<{ width: number, height: number } | undefined>(
+    ref?.current
+      ? undefined
+      : { width: window.innerWidth, height: window.innerHeight },
+  )
 
   useLayoutEffect(() => {
     function handleResize() {

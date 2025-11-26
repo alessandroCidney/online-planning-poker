@@ -49,9 +49,13 @@ export function UserAvatar({ className, imageId, size, bordered, disabled }: Use
       $size={size}
       className={classNames}
     >
-      <img
-        src={loadedPhoto}
-      />
+      {
+        loadedPhoto && (
+          <img
+            src={loadedPhoto}
+          />
+        )
+      }
     </StyledImgContainer>
   )
 }

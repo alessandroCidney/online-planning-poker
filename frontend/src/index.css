@@ -13,6 +13,8 @@
 }
 
 :root {
+  --theme-text-color: #25292D;
+
   --theme-primary-color: #0496FF;
   --theme-primary-lighten-1-color: #1FA2FF;
   --theme-primary-lighten-2-color: #33AAFF;

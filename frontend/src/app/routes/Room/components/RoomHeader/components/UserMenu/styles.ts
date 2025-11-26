@@ -26,3 +26,24 @@ export const StyledUserInfoContainer = styled.div`
     }
   }
 `
+
+export const StyledSignOutDialogActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+
+  button {
+    min-width: 150px;
+  }
+
+  @media (max-width: 600px) {
+    justify-content: center;
+    flex-direction: column-reverse;
+
+    button {
+      min-height: auto;
+      width: 100%;
+    }
+  }
+`

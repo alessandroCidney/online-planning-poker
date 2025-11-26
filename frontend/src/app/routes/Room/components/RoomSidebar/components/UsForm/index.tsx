@@ -52,6 +52,7 @@ export function UsForm({ onSubmit, onCancel }: UsFormProps) {
         <DefaultButton
           prependIcon={<BsCheck size={25} />}
           color='var(--theme-primary-lighten-3-color)'
+          type='submit'
         >
           Salvar
         </DefaultButton>
