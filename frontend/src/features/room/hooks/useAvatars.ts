@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from 'react'
 
-import catKingImg from '@/assets/images/pixelarts/cat-king.png'
-import dogWarriorImg from '@/assets/images/pixelarts/dog-warrior.png'
-import birdWizardImg from '@/assets/images/pixelarts/bird-wizard.png'
-import birdBusinesspersonImg from '@/assets/images/pixelarts/bird-businessperson.png'
-import spyFoxImg from '@/assets/images/pixelarts/spy-fox.png'
-import rabbitDoctorImg from '@/assets/images/pixelarts/rabbit-doctor.png'
+import catKingImg from '@/assets/images/pixelarts/cat-king.jpg'
+import dogWarriorImg from '@/assets/images/pixelarts/dog-warrior.jpg'
+import birdWizardImg from '@/assets/images/pixelarts/bird-wizard.jpg'
+import birdBusinesspersonImg from '@/assets/images/pixelarts/bird-businessperson.jpg'
+import spyFoxImg from '@/assets/images/pixelarts/spy-fox.jpg'
+import rabbitDoctorImg from '@/assets/images/pixelarts/rabbit-doctor.jpg'
 
 export function useAvatars() {
   const avatarsArr = useMemo(() => [
