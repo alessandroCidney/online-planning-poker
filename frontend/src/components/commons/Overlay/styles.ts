@@ -2,7 +2,22 @@ import styled from 'styled-components'
 
 import { motion } from 'motion/react'
 
-import { DefaultButton } from '../DefaultButton'
+export const StyledOverlayHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px;
+  
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 80px;
+
+  color: #fff;
+`
 
 export const StyledOverlay = styled(motion.div)`
   z-index: var(--base-overlay-z-index);
@@ -19,10 +34,5 @@ export const StyledOverlay = styled(motion.div)`
   height: 100vh;
 
   background-color: rgb(0, 0, 0, .7);
-`
-
-export const StyledCloseButton = styled(DefaultButton)`
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  backdrop-filter: blur(5px);
 `

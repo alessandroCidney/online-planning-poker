@@ -198,9 +198,10 @@ export function Home() {
                   </FieldTitle>
 
                   <FieldInput
+                    value={roomCodeFieldControls.value}
                     type='text'
                     placeholder='Código da Sala'
-                    value={roomCodeFieldControls.value}
+                    autoFocus
                     onChange={(e) => roomCodeFieldControls.setValue(e.target.value)}
                   />
                 </FormField>
@@ -272,9 +273,10 @@ export function Home() {
                   </FieldTitle>
 
                   <FieldInput
-                    type='text'
-                    placeholder='Potato Chips'
                     value={nameFieldControls.value}
+                    type='text'
+                    placeholder='Seu Nome'
+                    autoFocus
                     onChange={(e) => nameFieldControls.setValue(e.target.value)}
                   />
                 </FormField>

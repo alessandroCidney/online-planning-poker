@@ -1,8 +1,10 @@
 import type { ReactNode } from 'react'
 
+import textAppLogoWhiteSvg from '@/assets/images/logos/text-app-logo-white.svg'
+
 import { NotificationSnackbar } from '@/features/notifications/components/NotificationSnackbar'
 
-import { StyledMain } from './styles'
+import { StyledFooter, StyledHeader, StyledMain } from './styles'
 
 interface HomeLayoutProps {
   children: ReactNode
@@ -10,10 +12,25 @@ interface HomeLayoutProps {
 
 export function HomeLayout({ children }: HomeLayoutProps) {
   return (
-    <StyledMain>
-      { children }
+    <>
+      <StyledHeader>
+        <h1>
+          <img
+            src={textAppLogoWhiteSvg}
+            alt='Super Planning Poker'
+          />
+        </h1>
+      </StyledHeader>
 
-      <NotificationSnackbar />
-    </StyledMain>
+      <StyledMain>
+        { children }
+
+        <NotificationSnackbar />
+      </StyledMain>
+
+      <StyledFooter>
+        Copyright&copy;2025 Alessandro Cídney
+      </StyledFooter>
+    </>
   )
 }

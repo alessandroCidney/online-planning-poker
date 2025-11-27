@@ -39,7 +39,7 @@ export function Sidebar({ children, title }: SidebarProps) {
       // setTimeout prevents animation bug
       setTimeout(() => {
         sidebarRef.current?.focus()
-      }, 1)
+      }, 100)
     }
   }, [isMobile, sidebarIsOpen])
 

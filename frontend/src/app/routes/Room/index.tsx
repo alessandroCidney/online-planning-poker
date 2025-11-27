@@ -19,7 +19,6 @@ import { useElementDimensions } from '@/hooks/useElementDimensions'
 import { generateQuadraticEquation } from '@/utils/calc'
 
 import { RoomSidebar } from './components/RoomSidebar'
-import { RoomHeader } from './components/RoomHeader'
 import { RoomTable } from './components/RoomTable'
 import { PokerCard } from './components/PokerCard'
 
@@ -182,8 +181,6 @@ export function Room() {
       sidebarTitle='Tarefas'
       sidebarContent={<RoomSidebar />}
     >
-      <RoomHeader />
-
       <RoomTable />
 
       <StyledCardsContainer

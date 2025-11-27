@@ -1,7 +1,5 @@
 import { useMemo, type ReactNode } from 'react'
 
-import { LayoutGroup } from 'motion/react'
-
 import { useAppSelector } from '@/app/storeHooks'
 
 import { Sidebar } from '@/features/sidebar/components/Sidebar'
@@ -9,7 +7,8 @@ import { NotificationSnackbar } from '@/features/notifications/components/Notifi
 
 import { useElementDimensions } from '@/hooks/useElementDimensions'
 
-import { StyledMain, StyledSection } from './style'
+import { StyledLayoutContainer, StyledMain, StyledRoomContent } from './style'
+import { RoomHeader } from '@/app/routes/Room/components/RoomHeader'
 
 interface RoomLayoutProps {
   children: ReactNode
@@ -32,27 +31,29 @@ export function RoomLayout({ children, sidebarContent, sidebarTitle }: RoomLayou
   }, [sidebarIsOpen, windowDimensions])
 
   return (
-    <StyledMain>
-      <LayoutGroup>
-        <StyledSection
-          initial={{
-            width: '100%',
-          }}
-          animate={{
-            width: finalSectionWidth,
-          }}
-        >
+    <StyledLayoutContainer>
+      <StyledRoomContent
+        initial={{
+          width: '100%',
+        }}
+        animate={{
+          width: finalSectionWidth,
+        }}
+      >
+        <RoomHeader />
+
+        <StyledMain>
           { children }
 
           <NotificationSnackbar />
-        </StyledSection>
+        </StyledMain>
+      </StyledRoomContent>
 
-        <Sidebar
-          title={sidebarTitle}
-        >
-          { sidebarContent }
-        </Sidebar>
-      </LayoutGroup>
-    </StyledMain>
+      <Sidebar
+        title={sidebarTitle}
+      >
+        { sidebarContent }
+      </Sidebar>
+    </StyledLayoutContainer>
   )
 }

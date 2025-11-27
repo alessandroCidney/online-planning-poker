@@ -120,6 +120,7 @@ export function AvatarSelector(params: AvatarSelectorProps) {
 
   return (
     <Overlay
+      title='Selecionar avatar'
       value={currentOpen}
       setValue={(newValue) => !newValue && closeSelector()}
     >
