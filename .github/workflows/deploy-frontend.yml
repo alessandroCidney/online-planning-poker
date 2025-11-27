@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - frontend/**
 
 permissions:
   checks: write
@@ -14,22 +16,20 @@ defaults:
   run:
     working-directory: ./frontend
 
+env:
+  VITE_API_URL: ${{ secrets.VITE_API_URL }}
+  VITE_WEBSOCKET_URL: ${{ secrets.VITE_WEBSOCKET_URL }}
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-          VITE_WEBSOCKET_URL: ${{ secrets.VITE_WEBSOCKET_URL }}
       - run: |
           yarn install --frozen-lockfile
           yarn build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
-          VITE_WEBSOCKET_URL: ${{ secrets.VITE_WEBSOCKET_URL }}
         with:
           entryPoint: ./frontend
           repoToken: ${{ secrets.GITHUB_TOKEN }}
