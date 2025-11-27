@@ -29,6 +29,9 @@ jobs:
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
       - name: Deploy
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_WEBSOCKET_URL: ${{ secrets.VITE_WEBSOCKET_URL }}
         with:
           entryPoint: ./frontend
           repoToken: ${{ secrets.GITHUB_TOKEN }}
