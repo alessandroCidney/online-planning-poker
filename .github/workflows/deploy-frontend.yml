@@ -16,6 +16,9 @@ defaults:
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
       - run: yarn install --frozen-lockfile && yarn build
