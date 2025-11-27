@@ -19,10 +19,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_WEBSOCKET_URL: ${{ secrets.VITE_WEBSOCKET_URL }}
       - run: |
           yarn install --frozen-lockfile
           yarn build
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy
         with:
           entryPoint: ./frontend
           repoToken: ${{ secrets.GITHUB_TOKEN }}
