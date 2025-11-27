@@ -14,7 +14,7 @@ export function waitFor(conditionFn: () => boolean) {
       await waitFor(conditionFn)
 
       resolve()
-    }, 1000)
+    }, 100)
   })
 }
 
