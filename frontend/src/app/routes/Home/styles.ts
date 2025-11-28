@@ -61,6 +61,7 @@ export const FormBreak = styled.p`
   gap: 20px;
 
   padding: 10px 0;
+  margin-bottom: 0 !important;
 
   &::before, &::after {
     content: '';

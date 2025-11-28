@@ -9,8 +9,12 @@ export const StyledContainer = styled(motion.div)`
   justify-content: center;
   flex-direction: column;
 
+  padding: 0 20px;
+
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
+
+  overflow: hidden;
 
   p {
     margin-bottom: 40px;
@@ -34,6 +38,10 @@ export const StyledCardsContainer = styled.div`
   justify-content: center;
 
   margin-bottom: 70px;
+
+  @media (max-width: 600px) {
+    margin-bottom: 40px;
+  }
 `
 
 export const StyledErrorContainer = styled.main`

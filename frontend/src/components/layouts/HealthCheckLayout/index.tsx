@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 
+import { BsArrowCounterclockwise, BsExclamationCircleFill } from 'react-icons/bs'
 import { motion } from 'motion/react'
 
+import { DefaultButton } from '@/components/commons/DefaultButton'
+
+import { useElementDimensions } from '@/hooks/useElementDimensions'
+
 import { api } from '@/utils/api'
+import { wait } from '@/utils/time'
 
 import { LinearLoading } from './components/LinearLoading'
 
 import { StyledCardsContainer, StyledContainer, StyledErrorContainer, StyledPokerCard } from './styles'
-import { wait } from '@/utils/time'
-import { BsArrowCounterclockwise, BsExclamationCircleFill } from 'react-icons/bs'
-import { DefaultButton } from '@/components/commons/DefaultButton'
 
 let loadedOnce = false
 
@@ -22,6 +25,8 @@ export function HealthCheckLayout({ children }: HealthCheckLayoutProps) {
   const [showChildren, setShowChildren] = useState(false)
   const [showP, setShowP] = useState(false)
   const [fatalError, setFatalError] = useState(false)
+
+  const windowDimensions = useElementDimensions()
 
   const cardValues = ['L', 'O', 'A', 'D', 'I', 'N', 'G']
 
@@ -132,7 +137,7 @@ export function HealthCheckLayout({ children }: HealthCheckLayoutProps) {
                   filter: `brightness(${1 - cardIndex / 30})`,
                 }}
                 animate={{
-                  y: 30,
+                  y: windowDimensions && windowDimensions.width <= 600 ? 15 : 30,
                 }}
                 transition={{
                   repeat: Infinity,
@@ -141,7 +146,7 @@ export function HealthCheckLayout({ children }: HealthCheckLayoutProps) {
                   delay: -1 * (cardValues.length - cardIndex) / 4,
                   ease: 'easeInOut',
                 }}
-                width='70px'
+                width={windowDimensions && windowDimensions.width <= 600 ? '35px' : '70px'}
               />
             </div>
           ))
